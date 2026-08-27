@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-icon.png" />
+  <title>Cinco sonhos · mockups da home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Outfit:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #1c1714; color: #f4ece6; font-family: Outfit, system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    header { padding: 64px 8vw 36px; max-width: 920px; }
+    header p { letter-spacing: .28em; text-transform: uppercase; font-size: 11px; color: #c4a574; margin-bottom: 14px; }
+    h1 { font-family: "Cormorant Garamond", serif; font-weight: 400; font-style: italic; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; }
+    header .lead { margin-top: 18px; font-weight: 300; line-height: 1.7; color: rgba(244,236,230,.7); max-width: 560px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 0 8vw 80px; }
+    .card {
+      display: block; min-height: 340px; position: relative; overflow: hidden;
+      color: #fff;
+    }
+    .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease; }
+    .card:hover img { transform: scale(1.06); }
+    .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 20%, rgba(12,8,6,.88)); }
+    .card div { position: relative; z-index: 1; padding: 28px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; min-height: 340px; }
+    .num { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: #c4a574; }
+    .card h2 { font-family: "Cormorant Garamond", serif; font-size: 36px; font-weight: 400; font-style: italic; margin: 8px 0 6px; }
+    .card p { font-weight: 300; font-size: 14px; color: rgba(255,255,255,.78); max-width: 340px; }
+    .wide { grid-column: 1 / -1; min-height: 280px; }
+    .wide div { min-height: 280px; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p>Escolha o sonho</p>
+    <h1>Cinco jeitos de sentir o casamento — antes de falar de preço.</h1>
+    <p class="lead">A home atual vende taxa. Estes cinco vendem o dia. Abra cada um. Qual aperta o peito?</p>
+  </header>
+  <div class="grid">
+    <a class="card" href="01-ouro-da-tarde.html">
+      <img src="fotos/altar.jpg" alt="" />
+      <div>
+        <span class="num">01 — luz</span>
+        <h2>Ouro da tarde</h2>
+        <p>Golden hour, foto cheia, a frase do dia mais esperado.</p>
+      </div>
+    </a>
+    <a class="card" href="02-convite.html">
+      <img src="fotos/casal.jpg" alt="" />
+      <div>
+        <span class="num">02 — papel</span>
+        <h2>Convite</h2>
+        <p>Como abrir o envelope. Lacre, caligrafia, mãos trêmulas.</p>
+      </div>
+    </a>
+    <a class="card" href="03-noite-de-velas.html">
+      <img src="fotos/jardim.jpg" alt="" />
+      <div>
+        <span class="num">03 — noite</span>
+        <h2>Velas</h2>
+        <p>Luxo baixo. Ouro fino. O altar, não o produto.</p>
+      </div>
+    </a>
+    <a class="card" href="04-editorial.html">
+      <img src="fotos/ensaio.jpg" alt="" />
+      <div>
+        <span class="num">04 — revista</span>
+        <h2>Editorial</h2>
+        <p>Capa de revista. Tipo enorme. Vocês no centro da página.</p>
+      </div>
+    </a>
+    <a class="card wide" href="05-filme.html">
+      <img src="fotos/beijo.jpg" alt="" />
+      <div>
+        <span class="num">05 — cinema</span>
+        <h2>Filme de verão</h2>
+        <p>Granulação, luz quente, o play no filme da vida a dois.</p>
+      </div>
+    </a>
+  </div>
+</body>
+</html>

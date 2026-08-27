@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-icon.png" />
+  <title>Mockup 3 · Noite de velas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500&family=Outfit:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root { --gold: #c9a962; --void: #0c0a09; --cream: #eadcc6; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--void); color: var(--cream); font-family: Outfit, system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .picker {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; gap: 8px; align-items: center; justify-content: center;
+      padding: 8px 16px; background: #000; color: var(--gold); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      overflow-x: auto; white-space: nowrap;
+    }
+    .picker a { opacity: .45; padding: 6px 10px; }
+    .picker a.on, .picker a:hover { opacity: 1; }
+    .hero {
+      min-height: 100vh; display: grid; place-items: center; text-align: center; position: relative; overflow: hidden;
+      padding: 80px 24px;
+    }
+    .hero-photo {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(12,10,9,.15) 0%, rgba(12,10,9,.88) 70%, #0c0a09 100%),
+        url("fotos/altar.jpg") center 30%/cover;
+      filter: saturate(.7) brightness(.55);
+    }
+    .glow {
+      position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,98,.22), transparent 65%);
+      pointer-events: none;
+    }
+    .copy { position: relative; z-index: 2; max-width: 780px; }
+    .brand { font-family: Cinzel, serif; font-size: 11px; letter-spacing: .55em; color: var(--gold); margin-bottom: 40px; }
+    .line { width: 1px; height: 48px; background: var(--gold); margin: 0 auto 36px; opacity: .7; }
+    h1 {
+      font-family: Cinzel, serif; font-weight: 400; font-size: clamp(36px, 7vw, 78px);
+      letter-spacing: .18em; line-height: 1.15;
+    }
+    h1 em { font-family: "Cormorant Garamond", serif; font-style: italic; letter-spacing: 0; display: block; font-size: .62em; margin-top: 8px; color: var(--gold); }
+    .lead { margin: 28px auto 0; max-width: 460px; font-weight: 300; line-height: 1.8; color: rgba(234,220,198,.78); }
+    .cta { margin-top: 40px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 16px 34px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase;
+      border: 1px solid var(--gold); color: var(--gold);
+    }
+    .btn.fill { background: var(--gold); color: #1a140c; }
+    .btn.fill:hover { filter: brightness(1.08); }
+    .btn:hover { background: rgba(201,169,98,.12); }
+    .btn.fill:hover { background: var(--gold); }
+    .chapters { display: grid; grid-template-columns: 1fr 1.2fr; min-height: 80vh; }
+    .chapter-photo { min-height: 70vh; background: url("fotos/noiva.jpg") center/cover; filter: brightness(.55); }
+    .chapter-text { display: grid; place-items: center; padding: 64px 8vw; }
+    .chapter-text h2 { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(32px, 4vw, 48px); font-weight: 400; }
+    .chapter-text p { margin-top: 20px; max-width: 380px; line-height: 1.8; font-weight: 300; color: rgba(234,220,198,.75); }
+    .gold-num { font-family: Cinzel, serif; color: var(--gold); letter-spacing: .3em; font-size: 12px; margin-bottom: 16px; }
+    footer { padding: 40px; text-align: center; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: rgba(201,169,98,.55); border-top: 1px solid rgba(201,169,98,.2); }
+    @media (max-width: 800px) { .chapters { grid-template-columns: 1fr; } .chapter-photo { min-height: 46vh; } }
+  </style>
+</head>
+<body>
+  <div class="picker">
+    <a href="index.html">Todos</a>
+    <a href="01-ouro-da-tarde.html">1 Ouro</a>
+    <a href="02-convite.html">2 Convite</a>
+    <a class="on" href="03-noite-de-velas.html">3 Velas</a>
+    <a href="04-editorial.html">4 Revista</a>
+    <a href="05-filme.html">5 Filme</a>
+  </div>
+  <header class="hero">
+    <div class="hero-photo"></div>
+    <div class="glow" style="top:18%; left:12%"></div>
+    <div class="glow" style="bottom:10%; right:8%"></div>
+    <div class="copy">
+      <p class="brand">NossoCasamento</p>
+      <div class="line"></div>
+      <h1>PARA SEMPRE<em>o começo de tudo</em></h1>
+      <p class="lead">Luz baixa. Taça na mão. O instante em que o mundo inteiro cabe em dois nomes. O site à altura dessa noite.</p>
+      <div class="cta">
+        <a class="btn fill" href="#">Acender as velas</a>
+        <a class="btn" href="#">Ver a cerimônia</a>
+      </div>
+    </div>
+  </header>
+  <section class="chapters">
+    <div class="chapter-photo" role="img" aria-label="Noiva à luz suave"></div>
+    <div class="chapter-text">
+      <div>
+        <p class="gold-num">01 — Desejo</p>
+        <h2>Não é um produto.<br />É o altar digital.</h2>
+        <p>Quem entra aqui não compara taxas. Quem entra aqui sente o perfume das flores, o tecido do vestido, a música antes do sim.</p>
+      </div>
+    </div>
+  </section>
+  <section class="chapters" style="grid-template-columns: 1.2fr 1fr;">
+    <div class="chapter-text">
+      <div>
+        <p class="gold-num">02 — Promessa</p>
+        <h2>Um endereço que dure mais que o buquê.</h2>
+        <p>Convidar, confirmar, presentear — com a mesma delicadeza do jantar. Depois, o site fica. Como a aliança.</p>
+      </div>
+    </div>
+    <div class="chapter-photo" style="background-image:url('fotos/jardim.jpg')" role="img" aria-label="Alianças sobre o buquê"></div>
+  </section>
+  <footer>Até que o último convite seja aberto</footer>
+</body>
+</html>

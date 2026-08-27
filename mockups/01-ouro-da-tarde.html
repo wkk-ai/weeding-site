@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-icon.png" />
+  <title>Mockup 1 · Ouro da tarde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ivory: #f6efe6;
+      --gold: #c4a574;
+      --dusk: #2a1c18;
+      --ink: #3a2a24;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Outfit, system-ui, sans-serif; color: var(--ink); background: var(--ivory); }
+    a { color: inherit; text-decoration: none; }
+    .picker {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; gap: 8px; align-items: center; justify-content: center;
+      padding: 8px 16px; background: #1a1412; color: #f6efe6; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      overflow-x: auto; white-space: nowrap;
+    }
+    .picker a { opacity: .55; padding: 6px 10px; }
+    .picker a.on, .picker a:hover { opacity: 1; }
+    nav {
+      position: absolute; inset: 0 0 auto; z-index: 5;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 6vw; color: #fff;
+    }
+    .brand { font-family: "Cormorant Garamond", serif; font-size: 22px; letter-spacing: .08em; }
+    .nav-links { display: flex; gap: 28px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 300; }
+    .nav-links a:hover { color: var(--gold); }
+    .hero {
+      position: relative; min-height: 100vh; display: grid; place-items: end center;
+      color: #fff; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: -4%;
+      background: url("fotos/altar.jpg") center/cover;
+      animation: drift 28s ease-in-out infinite alternate;
+    }
+    @keyframes drift { to { transform: scale(1.08) translateY(-2%); } }
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(20,12,10,.25) 0%, rgba(20,12,10,.15) 40%, rgba(20,12,10,.78) 100%);
+    }
+    .hero-copy { position: relative; z-index: 2; text-align: center; padding: 0 24px 12vh; max-width: 920px; }
+    .eyebrow {
+      font-size: 12px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
+    }
+    h1 {
+      font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: clamp(42px, 7vw, 86px);
+      line-height: .95; font-style: italic;
+    }
+    .hero p { margin: 22px auto 0; max-width: 520px; font-weight: 300; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.86); }
+    .cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 36px; }
+    .btn {
+      display: inline-block; padding: 16px 32px; border-radius: 999px; font-size: 13px;
+      letter-spacing: .16em; text-transform: uppercase;
+    }
+    .btn-gold { background: var(--gold); color: var(--dusk); }
+    .btn-gold:hover { filter: brightness(1.08); }
+    .btn-ghost { border: 1px solid rgba(255,255,255,.55); color: #fff; }
+    .btn-ghost:hover { background: rgba(255,255,255,.1); }
+    .moments { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .moment { position: relative; min-height: 72vh; overflow: hidden; }
+    .moment img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 72vh; transition: transform 8s ease; }
+    .moment:hover img { transform: scale(1.06); }
+    .moment figcaption {
+      position: absolute; inset: auto 0 0; padding: 48px 28px 32px;
+      background: linear-gradient(transparent, rgba(20,12,10,.82)); color: #fff;
+    }
+    .moment h2 { font-family: "Cormorant Garamond", serif; font-size: 32px; font-weight: 400; font-style: italic; }
+    .moment p { margin-top: 8px; font-size: 14px; font-weight: 300; opacity: .85; max-width: 280px; }
+    .vow {
+      padding: 120px 24px; text-align: center; background: var(--ivory);
+    }
+    .vow blockquote {
+      font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(28px, 4vw, 48px);
+      max-width: 760px; margin: 0 auto; line-height: 1.3; color: var(--dusk);
+    }
+    .vow cite { display: block; margin-top: 28px; font-style: normal; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+    .soft-cta { padding: 0 24px 100px; text-align: center; }
+    .soft-cta h3 { font-family: "Cormorant Garamond", serif; font-size: 36px; font-weight: 400; }
+    .soft-cta p { margin: 12px auto 28px; max-width: 420px; font-weight: 300; color: #6a5750; }
+    footer { padding: 28px 6vw; display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #8a746c; border-top: 1px solid #e6d9cc; }
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .moments { grid-template-columns: 1fr; }
+      .moment, .moment img { min-height: 56vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="picker">
+    <a href="index.html">Todos</a>
+    <a class="on" href="01-ouro-da-tarde.html">1 Ouro</a>
+    <a href="02-convite.html">2 Convite</a>
+    <a href="03-noite-de-velas.html">3 Velas</a>
+    <a href="04-editorial.html">4 Revista</a>
+    <a href="05-filme.html">5 Filme</a>
+  </div>
+  <header class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <nav>
+      <div class="brand">NossoCasamento</div>
+      <div class="nav-links">
+        <a href="#sonho">O sonho</a>
+        <a href="#sonho">Um exemplo</a>
+        <a href="#comecar">Começar</a>
+      </div>
+    </nav>
+    <div class="hero-copy">
+      <p class="eyebrow">O dia mais esperado</p>
+      <h1>O site do casamento que vocês sonharam a vida inteira</h1>
+      <p>Um lugar tão bonito quanto o amor de vocês. Para convidar quem importa, emocionar quem chega e guardar esse dia para sempre.</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="#comecar">Começar o nosso site</a>
+        <a class="btn btn-ghost" href="#sonho">Sentir o clima</a>
+      </div>
+    </div>
+  </header>
+  <section id="sonho" class="moments">
+    <figure class="moment">
+      <img src="fotos/noiva.jpg" alt="Noivos ao entardecer" />
+      <figcaption>
+        <h2>A história</h2>
+        <p>O jeito de vocês. As fotos. A data. Tudo no mesmo fôlego.</p>
+      </figcaption>
+    </figure>
+    <figure class="moment">
+      <img src="fotos/festa.jpg" alt="Festa com balões e convidados" />
+      <figcaption>
+        <h2>O convite</h2>
+        <p>Quem ama vocês confirma presença com o coração, não com um formulário frio.</p>
+      </figcaption>
+    </figure>
+    <figure class="moment">
+      <img src="fotos/mesa.jpg" alt="Mesa da recepção" />
+      <figcaption>
+        <h2>Os presentes</h2>
+        <p>Uma lista delicada. PIX no mesmo instante. Sem roubar a magia do dia.</p>
+      </figcaption>
+    </figure>
+  </section>
+  <section class="vow">
+    <blockquote>“A gente não constrói um site. A gente constrói o palco do dia em que duas vidas viram uma.”</blockquote>
+    <cite>Para quem já sabe a data de cor</cite>
+  </section>
+  <section id="comecar" class="soft-cta">
+    <h3>Quando quiserem, o sonho ganha endereço</h3>
+    <p>Cinco minutos. Sem cartão. O resto é flor, luz e o nome de vocês.</p>
+    <a class="btn btn-gold" href="#">Criar o nosso site</a>
+  </section>
+  <footer>
+    <span>NossoCasamento</span>
+    <span>O dia de vocês, em um lugar só</span>
+  </footer>
+</body>
+</html>

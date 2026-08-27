@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-icon.png" />
+  <title>Mockup 4 · Editorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f4ece6; color: #1c1714; font-family: Outfit, system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .picker {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; gap: 8px; align-items: center; justify-content: center;
+      padding: 8px 16px; background: #1c1714; color: #f4ece6; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      overflow-x: auto; white-space: nowrap;
+    }
+    .picker a { opacity: .5; padding: 6px 10px; }
+    .picker a.on, .picker a:hover { opacity: 1; }
+    .mast {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 18px 4vw 10px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #6b7355;
+      border-bottom: 1px solid #e0d4ca;
+    }
+    .spread { display: grid; grid-template-columns: 1.15fr .85fr; min-height: calc(100vh - 90px); }
+    .photo { position: relative; overflow: hidden; }
+    .photo img { width: 100%; height: 100%; object-fit: cover; min-height: 88vh; display: block; }
+    .stamp {
+      position: absolute; left: 28px; bottom: 28px; color: #fff;
+      font-family: Fraunces, serif; font-style: italic; font-size: 18px;
+      text-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
+    .copy { padding: 48px 6vw 48px 48px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .issue { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: #b76e79; margin-bottom: 20px; }
+    h1 { font-family: Fraunces, serif; font-weight: 300; font-size: clamp(48px, 6.4vw, 92px); line-height: .9; letter-spacing: -.03em; }
+    .pull { font-family: Fraunces, serif; font-style: italic; font-size: 22px; margin: 28px 0; max-width: 360px; color: #5c4a44; font-weight: 300; }
+    .body { max-width: 380px; font-weight: 300; line-height: 1.75; color: #4a3f3a; }
+    .cta { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 26px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    }
+    .btn-ink { background: #1c1714; color: #f4ece6; }
+    .btn-ink:hover { background: #3a2e28; }
+    .btn-line { border: 1px solid #1c1714; }
+    .btn-line:hover { background: #fff; }
+    .vert {
+      position: absolute; right: 18px; top: 50%; transform: translateY(-50%) rotate(90deg);
+      font-family: Fraunces, serif; font-size: 13px; letter-spacing: .4em; text-transform: uppercase; color: #c4b6ac; white-space: nowrap;
+    }
+    .strip { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #e0d4ca; }
+    .cell { padding: 40px 32px; border-right: 1px solid #e0d4ca; }
+    .cell:last-child { border-right: 0; }
+    .cell small { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: #6b7355; }
+    .cell h2 { font-family: Fraunces, serif; font-weight: 300; font-size: 28px; margin: 10px 0 8px; }
+    .cell p { font-weight: 300; font-size: 14px; line-height: 1.6; color: #5c4a44; }
+    @media (max-width: 860px) {
+      .spread, .strip { grid-template-columns: 1fr; }
+      .photo img { min-height: 62vh; }
+      .copy { padding: 40px 24px 64px; }
+      .vert { display: none; }
+      .cell { border-right: 0; border-bottom: 1px solid #e0d4ca; }
+    }
+  </style>
+</head>
+<body>
+  <div class="picker">
+    <a href="index.html">Todos</a>
+    <a href="01-ouro-da-tarde.html">1 Ouro</a>
+    <a href="02-convite.html">2 Convite</a>
+    <a href="03-noite-de-velas.html">3 Velas</a>
+    <a class="on" href="04-editorial.html">4 Revista</a>
+    <a href="05-filme.html">5 Filme</a>
+  </div>
+  <div class="mast">
+    <span>NossoCasamento</span>
+    <span>Vol. 01 — Edição do coração</span>
+    <span>Brasil</span>
+  </div>
+  <section class="spread">
+    <div class="photo">
+      <img src="fotos/ensaio.jpg" alt="Beijo dos noivos com pétalas no ar" />
+      <p class="stamp">capa da vida a dois</p>
+    </div>
+    <div class="copy">
+      <p class="issue">Ensaio especial</p>
+      <h1>Não é um site. É a capa do sonho.</h1>
+      <p class="pull">O amor pede página inteira. Tipografia grande. Foto que segura o olhar.</p>
+      <p class="body">Vocês já escolheram um ao outro. Falta só o lugar onde o mundo inteiro vê isso — convidados, presentes, a história, o “sim” impresso em luz.</p>
+      <div class="cta">
+        <a class="btn btn-ink" href="#">Publicar a nossa capa</a>
+        <a class="btn btn-line" href="#">Folhear um exemplo</a>
+      </div>
+      <span class="vert">para sempre · para sempre ·</span>
+    </div>
+  </section>
+  <section class="strip">
+    <article class="cell">
+      <small>01</small>
+      <h2>Retrato</h2>
+      <p>As fotos de vocês no centro. Como em revista — não como em formulário.</p>
+    </article>
+    <article class="cell">
+      <small>02</small>
+      <h2>Lista</h2>
+      <p>Quem vem, quem presenteia. Tudo no mesmo caderno, sem perder a poesia.</p>
+    </article>
+    <article class="cell">
+      <small>03</small>
+      <h2>Arquivo</h2>
+      <p>Uma edição que não sai de circulação no dia seguinte à festa.</p>
+    </article>
+  </section>
+</body>
+</html>

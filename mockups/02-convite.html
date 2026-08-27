@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-icon.png" />
+  <title>Mockup 2 · Convite de papel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Great+Vibes&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: #e8dcc8 url("fotos/casal.jpg") center/cover fixed;
+      color: #3b2f28;
+      font-family: "Libre Baskerville", Georgia, serif;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; background: rgba(243, 232, 214, .82); pointer-events: none;
+    }
+    .picker {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; gap: 8px; align-items: center; justify-content: center;
+      padding: 8px 16px; background: #3b2f28; color: #f6efe6; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      font-family: system-ui, sans-serif; overflow-x: auto; white-space: nowrap;
+    }
+    .picker a { color: inherit; text-decoration: none; opacity: .55; padding: 6px 10px; }
+    .picker a.on, .picker a:hover { opacity: 1; }
+    .wrap { position: relative; z-index: 1; padding: 48px 16px 80px; }
+    .invite {
+      max-width: 640px; margin: 0 auto; background: #fffdf8;
+      padding: 72px 48px 56px; text-align: center;
+      box-shadow: 0 30px 80px rgba(80,50,30,.18), 0 0 0 1px #e6d7c3;
+      position: relative;
+    }
+    .invite::before, .invite::after {
+      content: ""; position: absolute; inset: 18px; border: 1px solid #d7c4aa; pointer-events: none;
+    }
+    .invite::after { inset: 22px; }
+    .ornament { color: #b08968; letter-spacing: .6em; font-size: 10px; margin-bottom: 28px; }
+    .script {
+      font-family: "Great Vibes", cursive; font-size: clamp(52px, 9vw, 84px); color: #7a3e48; line-height: 1;
+    }
+    h1 {
+      font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: clamp(28px, 4vw, 40px);
+      margin: 8px 0 28px; letter-spacing: .08em;
+    }
+    .rule { width: 72px; height: 1px; background: #c4a574; margin: 0 auto 28px; }
+    .invite p { font-size: 15px; line-height: 1.9; font-style: italic; color: #5c4a40; }
+    .meta { margin: 36px 0 8px; font-size: 12px; letter-spacing: .32em; text-transform: uppercase; font-style: normal; color: #8a6a55; }
+    .names { font-family: "Cormorant Garamond", serif; font-size: 28px; font-style: italic; }
+    .seal {
+      width: 64px; height: 64px; margin: 36px auto 0; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #b85c5c, #7a2e34);
+      color: #f6e6c8; display: grid; place-items: center;
+      font-family: "Great Vibes", cursive; font-size: 28px;
+      box-shadow: 0 8px 18px rgba(90,20,20,.25);
+    }
+    .rsvp {
+      display: inline-block; margin-top: 36px; padding: 14px 40px;
+      border: 1px solid #7a3e48; color: #7a3e48; letter-spacing: .22em;
+      text-transform: uppercase; font-size: 11px; font-style: normal; text-decoration: none;
+      font-family: system-ui, sans-serif;
+    }
+    .rsvp:hover { background: #7a3e48; color: #fffdf8; }
+    .pages { max-width: 980px; margin: 64px auto 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+    .page {
+      background: #fffdf8; padding: 32px 24px 28px; text-align: center;
+      box-shadow: 0 12px 30px rgba(80,50,30,.1);
+    }
+    .page h2 { font-family: "Cormorant Garamond", serif; font-size: 26px; font-weight: 400; font-style: italic; color: #7a3e48; }
+    .page p { margin-top: 12px; font-size: 13px; line-height: 1.7; color: #5c4a40; }
+    @media (max-width: 800px) {
+      .invite { padding: 56px 28px 40px; }
+      .pages { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="picker">
+    <a href="index.html">Todos</a>
+    <a href="01-ouro-da-tarde.html">1 Ouro</a>
+    <a class="on" href="02-convite.html">2 Convite</a>
+    <a href="03-noite-de-velas.html">3 Velas</a>
+    <a href="04-editorial.html">4 Revista</a>
+    <a href="05-filme.html">5 Filme</a>
+  </div>
+  <div class="wrap">
+    <article class="invite">
+      <p class="ornament">✦ &nbsp; com amor &nbsp; ✦</p>
+      <p class="script">Vocês estão convidados</p>
+      <h1>a criar o site do grande dia</h1>
+      <div class="rule"></div>
+      <p>
+        Como um convite que se abre com o coração na mão.<br />
+        Um papel digital à altura do vestido, das flores e do sim.
+      </p>
+      <p class="meta">Em honra de</p>
+      <p class="names">dois nomes, uma vida</p>
+      <p class="meta" style="margin-top:28px">A cerimônia acontece</p>
+      <p>no instante em que vocês publicam.<br />Convidados, presentes e a história — tudo no mesmo envelope.</p>
+      <div class="seal" aria-hidden="true">N</div>
+      <a class="rsvp" href="#">Confirmar este sonho</a>
+    </article>
+    <div class="pages">
+      <article class="page">
+        <h2>Abrir o envelope</h2>
+        <p>Nomes, data, o tom das flores. O site nasce do mesmo jeito que o convite: com cuidado.</p>
+      </article>
+      <article class="page">
+        <h2>Entregar em mãos</h2>
+        <p>Quem ama vocês recebe um link que parece papel fino — e responde se vem à festa.</p>
+      </article>
+      <article class="page">
+        <h2>Guardar na gaveta</h2>
+        <p>Depois da festa, o site continua. Um álbum que não some em trinta dias.</p>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

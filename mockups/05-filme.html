@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-icon.png" />
+  <title>Mockup 5 · Filme de verão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #1a1612; color: #f3e6d4; font-family: Outfit, system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .picker {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; gap: 8px; align-items: center; justify-content: center;
+      padding: 8px 16px; background: #000; color: #e8c9a0; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      overflow-x: auto; white-space: nowrap;
+    }
+    .picker a { opacity: .5; padding: 6px 10px; }
+    .picker a.on, .picker a:hover { opacity: 1; }
+    .letterbox { padding: 0 0 8vh; }
+    .frame {
+      position: relative; height: 86vh; overflow: hidden;
+      display: grid; place-items: center; text-align: center;
+    }
+    .frame img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      filter: sepia(.28) contrast(1.05) saturate(.85); animation: pan 30s ease-in-out infinite alternate;
+    }
+    @keyframes pan { to { transform: scale(1.1); } }
+    .grain {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .22;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.55'/></svg>");
+    }
+    .vignette {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(10,8,6,.45), transparent 30%, rgba(10,8,6,.2) 60%, rgba(10,8,6,.78));
+    }
+    .title { position: relative; z-index: 3; padding: 24px; }
+    .title small { letter-spacing: .4em; text-transform: uppercase; font-size: 11px; color: #e8c9a0; }
+    h1 {
+      font-family: "Instrument Serif", serif; font-weight: 400; font-style: italic;
+      font-size: clamp(44px, 8vw, 96px); line-height: .95; margin: 16px 0 18px;
+    }
+    .title p { max-width: 440px; margin: 0 auto; font-weight: 300; line-height: 1.7; color: rgba(243,230,212,.85); }
+    .play {
+      display: inline-flex; align-items: center; gap: 12px; margin-top: 32px;
+      padding: 14px 28px 14px 18px; border: 1px solid rgba(243,230,212,.4); border-radius: 999px;
+      letter-spacing: .16em; text-transform: uppercase; font-size: 11px;
+    }
+    .play:hover { background: rgba(243,230,212,.1); }
+    .dot { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e8c9a0; display: grid; place-items: center; }
+    .dot::after { content: ""; border-left: 9px solid #e8c9a0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; margin-left: 3px; }
+    .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 6px; background: #0e0c0a; }
+    .cell { position: relative; min-height: 34vh; overflow: hidden; }
+    .cell img { width: 100%; height: 100%; object-fit: cover; min-height: 34vh; filter: sepia(.2) saturate(.9); display: block; }
+    .cell span {
+      position: absolute; left: 16px; bottom: 14px; z-index: 1;
+      font-family: "Instrument Serif", serif; font-style: italic; font-size: 22px;
+    }
+    .cell::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,.55)); }
+    .end { padding: 80px 24px; text-align: center; }
+    .end h2 { font-family: "Instrument Serif", serif; font-size: clamp(28px, 4vw, 44px); font-weight: 400; font-style: italic; }
+    .end p { margin: 16px auto 28px; max-width: 420px; font-weight: 300; color: rgba(243,230,212,.7); }
+    .btn-warm { display: inline-block; padding: 16px 32px; background: #c45c3a; color: #fff8f0; letter-spacing: .14em; text-transform: uppercase; font-size: 12px; }
+    .btn-warm:hover { filter: brightness(1.08); }
+    @media (max-width: 800px) {
+      .frame { height: 78vh; }
+      .strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="picker">
+    <a href="index.html">Todos</a>
+    <a href="01-ouro-da-tarde.html">1 Ouro</a>
+    <a href="02-convite.html">2 Convite</a>
+    <a href="03-noite-de-velas.html">3 Velas</a>
+    <a href="04-editorial.html">4 Revista</a>
+    <a class="on" href="05-filme.html">5 Filme</a>
+  </div>
+  <div class="letterbox">
+    <header class="frame">
+      <img src="fotos/noiva.jpg" alt="Noivos ao fim da tarde" />
+      <div class="vignette"></div>
+      <div class="grain"></div>
+      <div class="title">
+        <small>uma história de amor</small>
+        <h1>O filme que vocês sempre assistiram — agora com os nomes de vocês</h1>
+        <p>Granulação, luz quente, o caminhar até o altar. O site como a abertura de um filme que dura a vida toda.</p>
+        <a class="play" href="#cenas"><span class="dot" aria-hidden="true"></span> Começar o filme</a>
+      </div>
+    </header>
+    <section id="cenas" class="strip">
+      <figure class="cell">
+        <img src="fotos/altar.jpg" alt="Cerimônia ao entardecer" />
+        <span>cena 01 · o sim</span>
+      </figure>
+      <figure class="cell">
+        <img src="fotos/beijo.jpg" alt="Beijo dos noivos" />
+        <span>cena 02 · os convites</span>
+      </figure>
+      <figure class="cell">
+        <img src="fotos/mesa.jpg" alt="Mesa da festa" />
+        <span>cena 03 · os presentes</span>
+      </figure>
+    </section>
+    <section class="end">
+      <h2>Acreditem: o público já está emocionado.</h2>
+      <p>Falta só apertar play. Cinco minutos para o cartaz sair — com RSVP, lista e a história de vocês.</p>
+      <a class="btn-warm" href="#">Dar play no nosso site</a>
+    </section>
+  </div>
+</body>
+</html>
