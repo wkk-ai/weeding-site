@@ -129,9 +129,9 @@ export function WeddingSiteView({
         {showBranding && (
           <p className="text-sm text-wine/50">
             Site criado com{" "}
-            <a href="/" className="font-semibold text-wine hover:underline">
+            <Link href="/" className="font-semibold text-wine hover:underline">
               NossoCasamento
-            </a>
+            </Link>
           </p>
         )}
       </footer>

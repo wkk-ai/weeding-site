@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const isStaticExport = process.env.STATIC_EXPORT === "1";
+const isGitHubPages = process.env.GITHUB_PAGES === "1";
+const githubPagesBasePath = "/weeding-site";
 
 const nextConfig: NextConfig = {
   ...(isStaticExport
@@ -11,6 +13,11 @@ const nextConfig: NextConfig = {
     : {
         output: "standalone",
       }),
+  ...(isGitHubPages
+    ? {
+        basePath: githubPagesBasePath,
+      }
+    : {}),
   images: {
     unoptimized: true,
   },
