@@ -13,6 +13,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 This repo is private. GitHub Pages is the review surface for Cursor mobile (localhost is not visible there).
 
 - Live preview: https://wkk-ai.github.io/weeding-site/
-- Deploys on every push to `main` or `cursor/**` via `.github/workflows/github-pages.yml`
+- Deploys on every push to `main` via `.github/workflows/github-pages.yml`
 - Static pages only: landing, `/demo/`, `/login/`, `/signup/`. Dashboard, RSVP APIs, and payments are not included.
 
