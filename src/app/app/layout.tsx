@@ -1,29 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-  LayoutDashboard,
-  Edit3,
-  Users,
-  Gift,
-  Wallet,
-  Globe,
-  ExternalLink,
-  CreditCard,
-} from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { SignOutButton } from "@/components/app/sign-out-button";
+import { MobileNav, fullNav } from "@/components/app/mobile-nav";
 import { createClient } from "@/lib/supabase/server";
 import { coupleDisplayName, formatDate } from "@/lib/utils";
 import { PLANS } from "@/lib/constants";
-
-const nav = [
-  { href: "/app", icon: LayoutDashboard, label: "Visão geral" },
-  { href: "/app/editor", icon: Edit3, label: "Editor" },
-  { href: "/app/convidados", icon: Users, label: "Convidados" },
-  { href: "/app/presentes", icon: Gift, label: "Presentes" },
-  { href: "/app/financeiro", icon: Wallet, label: "Financeiro" },
-  { href: "/app/dominio", icon: Globe, label: "Domínio" },
-  { href: "/app/planos", icon: CreditCard, label: "Planos" },
-];
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -56,7 +38,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </span>
         </div>
         <nav className="p-4">
-          {nav.map(({ href, icon: Icon, label }) => (
+          {fullNav.map(({ href, icon: Icon, label }) => (
             <Link
               key={href}
               href={href}
@@ -68,6 +50,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           ))}
         </nav>
         <div className="border-t border-wine/10 p-4">
+          <Link href="/app/preview" className="mb-2 block text-sm font-medium text-wine hover:underline">
+            Ver prévia
+          </Link>
           {tenant.published ? (
             <Link
               href={`/s/${tenant.slug}`}
@@ -83,7 +68,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <SignOutButton />
         </div>
       </aside>
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto pb-20 md:pb-0">
         <div className="border-b border-wine/10 bg-white px-6 py-4 md:hidden">
           <p className="font-serif font-bold text-wine">
             {coupleDisplayName(tenant.partner1_name, tenant.partner2_name)}
@@ -91,6 +76,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
         <div className="p-6">{children}</div>
       </main>
+      <MobileNav />
     </div>
   );
 }

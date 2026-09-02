@@ -64,7 +64,7 @@ export default async function PlanosPage() {
               </ul>
               {!isCurrent && plan.price > 0 && (
                 <Link
-                  href={`/api/checkout?plan=${plan.id}`}
+                  href={`/app/checkout?plan=${plan.id}`}
                   className="mt-6 block rounded-full bg-wine py-3 text-center text-sm font-semibold text-white hover:bg-wine-light"
                 >
                   Assinar {plan.name}

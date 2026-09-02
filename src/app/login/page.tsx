@@ -66,6 +66,11 @@ function LoginForm() {
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
+          <p className="text-right text-sm">
+            <Link href="/login/recuperar" className="text-wine/70 underline">
+              Esqueci a senha
+            </Link>
+          </p>
           <button
             type="submit"
             disabled={loading}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { formatCurrency } from "@/lib/utils";
 import { Plus, Trash2 } from "lucide-react";
+import { uploadWeddingPhoto } from "@/lib/upload";
 import type { Gift } from "@/lib/types";
 
 export default function GiftsManagePage() {
@@ -12,6 +13,7 @@ export default function GiftsManagePage() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,6 +51,15 @@ export default function GiftsManagePage() {
     const priceCents = Math.round(parseFloat(price.replace(",", ".")) * 100);
     if (!priceCents || priceCents <= 0) return;
 
+    let photo_url: string | null = null;
+    if (photoFile) {
+      try {
+        photo_url = await uploadWeddingPhoto(photoFile);
+      } catch {
+        /* keep going without photo */
+      }
+    }
+
     const supabase = createClient();
     await supabase.from("gifts").insert({
       tenant_id: tenantId,
@@ -56,11 +67,13 @@ export default function GiftsManagePage() {
       description: description || null,
       price_cents: priceCents,
       sort_order: gifts.length,
+      photo_url,
     });
 
     setTitle("");
     setPrice("");
     setDescription("");
+    setPhotoFile(null);
     loadGifts();
   }
 
@@ -98,6 +111,12 @@ export default function GiftsManagePage() {
             onChange={(e) => setDescription(e.target.value)}
             className="rounded-lg border border-wine/20 px-4 py-3 sm:col-span-2"
           />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setPhotoFile(e.target.files?.[0] ?? null)}
+            className="sm:col-span-2 text-sm"
+          />
         </div>
         <button
           type="submit"
@@ -119,12 +138,18 @@ export default function GiftsManagePage() {
               key={g.id}
               className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
             >
-              <div>
-                <p className="font-semibold text-wine">{g.title}</p>
-                <p className="text-sm text-wine/60">
-                  {formatCurrency(g.price_cents)} ·{" "}
-                  {formatCurrency(g.funded_cents)} recebido
-                </p>
+              <div className="flex items-center gap-3">
+                {g.photo_url && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={g.photo_url} alt="" className="h-12 w-12 rounded object-cover" />
+                )}
+                <div>
+                  <p className="font-semibold text-wine">{g.title}</p>
+                  <p className="text-sm text-wine/60">
+                    {formatCurrency(g.price_cents)} ·{" "}
+                    {formatCurrency(g.funded_cents)} recebido
+                  </p>
+                </div>
               </div>
               <button
                 onClick={() => removeGift(g.id)}

@@ -25,6 +25,8 @@ export interface Tenant {
   password_hash: string | null;
   asaas_wallet_id: string | null;
   pix_key: string | null;
+  site_password?: string | null;
+  custom_domain?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -47,6 +49,13 @@ export interface SiteContent {
   dressCode?: string;
   gallery: GalleryPhoto[];
   registryMessage?: string;
+  coverPhotoUrl?: string;
+  bridePhotoUrl?: string;
+  groomPhotoUrl?: string;
+  padrinhos: PartyMember[];
+  timeline: TimelineItem[];
+  thankYouMessage?: string;
+  musicNote?: string;
 }
 
 export interface EventBlock {
@@ -64,6 +73,20 @@ export interface GalleryPhoto {
   caption?: string;
 }
 
+export interface PartyMember {
+  id: string;
+  name: string;
+  role: string;
+  photoUrl?: string;
+}
+
+export interface TimelineItem {
+  id: string;
+  time: string;
+  title: string;
+  description: string;
+}
+
 export interface Guest {
   id: string;
   tenant_id: string;
@@ -73,6 +96,9 @@ export interface Guest {
   rsvp_status: RsvpStatus;
   meal_choice: string | null;
   plus_one: boolean;
+  plus_one_name?: string | null;
+  party_size?: number | null;
+  kids?: number | null;
   notes: string | null;
   created_at: string;
 }
@@ -86,6 +112,7 @@ export interface Gift {
   funded_cents: number;
   status: GiftStatus;
   sort_order: number;
+  photo_url?: string | null;
 }
 
 export interface Transaction {
@@ -101,4 +128,14 @@ export interface Transaction {
   status: TransactionStatus;
   asaas_payment_id: string | null;
   created_at: string;
+  message?: string | null;
+}
+
+export interface DemoGift {
+  id: string;
+  title: string;
+  description: string;
+  price_cents: number;
+  funded_cents: number;
+  photo_url: string;
 }

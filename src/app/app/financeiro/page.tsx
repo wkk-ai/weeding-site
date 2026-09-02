@@ -18,13 +18,12 @@ export default async function FinanceiroPage() {
     .from("transactions")
     .select("*")
     .eq("tenant_id", tenant!.id)
-    .eq("status", "confirmed")
     .order("created_at", { ascending: false });
 
+  const confirmed = transactions?.filter((t) => t.status === "confirmed") ?? [];
   const totalReceived =
-    transactions?.reduce((s, t) => s + t.amount_cents - t.platform_fee_cents, 0) ?? 0;
-  const totalFees =
-    transactions?.reduce((s, t) => s + t.platform_fee_cents, 0) ?? 0;
+    confirmed.reduce((s, t) => s + t.amount_cents - t.platform_fee_cents, 0);
+  const totalFees = confirmed.reduce((s, t) => s + t.platform_fee_cents, 0);
 
   const plan = PLANS[tenant!.plan as keyof typeof PLANS];
 
@@ -78,7 +77,7 @@ export default async function FinanceiroPage() {
       </section>
 
       <section className="mt-8">
-        <h2 className="font-semibold text-wine">Transações confirmadas</h2>
+        <h2 className="font-semibold text-wine">Presentes e recados</h2>
         {(!transactions || transactions.length === 0) && (
           <p className="mt-4 text-wine/60">Nenhuma transação ainda.</p>
         )}
@@ -92,8 +91,11 @@ export default async function FinanceiroPage() {
                 <p className="font-medium text-wine">{t.guest_name}</p>
                 <p className="text-xs text-wine/50">
                   {new Date(t.created_at).toLocaleDateString("pt-BR")} ·{" "}
-                  {t.payment_method.toUpperCase()}
+                  {t.payment_method.toUpperCase()} · {t.status}
                 </p>
+                {t.message && (
+                  <p className="mt-1 text-sm italic text-wine/70">“{t.message}”</p>
+                )}
               </div>
               <p className="font-semibold text-sage">
                 +{formatCurrency(t.amount_cents - t.platform_fee_cents)}

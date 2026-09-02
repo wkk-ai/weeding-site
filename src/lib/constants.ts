@@ -42,9 +42,16 @@ export const PLANS = {
 
 export type PlanId = keyof typeof PLANS;
 
+export const ARCHIVE_PRICE_CENTS = 3990;
+
 export const ARCHIVE_PRICE = 39.9;
 
 export const TEMPLATE_IDS = ["classic", "garden", "minimal"] as const;
 export type TemplateId = (typeof TEMPLATE_IDS)[number];
 
 export const CARD_SURCHARGE_PERCENT = 2.0;
+
+export const CONTACT_WHATSAPP = "5511912345678";
+export const CONTACT_EMAIL = "ola@nossocasamento.com.br";
+export const CONTACT_PRIVACY = "privacidade@nossocasamento.com.br";
+export const INSTAGRAM_URL = "https://instagram.com/nossocasamento";

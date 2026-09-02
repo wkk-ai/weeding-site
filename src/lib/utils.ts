@@ -57,6 +57,13 @@ export function defaultSiteContent(): SiteContent {
     gallery: [],
     registryMessage:
       "Sua presença é o melhor presente! Se desejar nos presentear, confira nossa lista.",
+    coverPhotoUrl: "",
+    bridePhotoUrl: "",
+    groomPhotoUrl: "",
+    padrinhos: [],
+    timeline: [],
+    thankYouMessage: "Obrigado por celebrar conosco.",
+    musicNote: "",
   };
 }
 

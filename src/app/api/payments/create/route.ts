@@ -17,6 +17,7 @@ const schema = z.object({
   name: z.string().min(2),
   email: z.string().email().optional().or(z.literal("")),
   method: z.enum(["pix", "card"]),
+  message: z.string().optional(),
 });
 
 export async function POST(request: Request) {
@@ -84,6 +85,7 @@ export async function POST(request: Request) {
       processing_fee_cents: processingFee,
       payment_method: method,
       status: "pending",
+      message: parsed.data.message || null,
     })
     .select()
     .single();

@@ -7,9 +7,14 @@ const schema = z.object({
   slug: z.string(),
   name: z.string().min(2),
   email: z.string().email().optional().or(z.literal("")),
+  phone: z.string().optional(),
   rsvp_status: z.enum(["confirmed", "declined"]),
   meal_choice: z.string().optional(),
   notes: z.string().optional(),
+  plus_one: z.boolean().optional(),
+  plus_one_name: z.string().optional(),
+  party_size: z.number().int().min(1).optional(),
+  kids: z.number().int().min(0).optional(),
 });
 
 export async function POST(request: Request) {
@@ -20,7 +25,7 @@ export async function POST(request: Request) {
   }
 
   const supabase = createServiceClient();
-  const { slug, name, email, rsvp_status, meal_choice, notes } = parsed.data;
+  const { slug, name, email, phone, rsvp_status, meal_choice, notes, plus_one, plus_one_name, party_size, kids } = parsed.data;
 
   const { data: tenant } = await supabase
     .from("tenants")
@@ -51,9 +56,14 @@ export async function POST(request: Request) {
     tenant_id: tenant.id,
     name,
     email: email || null,
+    phone: phone || null,
     rsvp_status,
     meal_choice: meal_choice || null,
     notes: notes || null,
+    plus_one: plus_one ?? false,
+    plus_one_name: plus_one_name || null,
+    party_size: party_size ?? 1,
+    kids: kids ?? 0,
   });
 
   if (error) {

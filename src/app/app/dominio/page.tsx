@@ -1,59 +1,91 @@
-import { createClient } from "@/lib/supabase/server";
+"use client";
+
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { PLANS } from "@/lib/constants";
+import type { PlanId } from "@/lib/constants";
+import type { Tenant } from "@/lib/types";
 
-export default async function DominioPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: tenant } = await supabase
-    .from("tenants")
-    .select("*")
-    .eq("user_id", user!.id)
-    .single();
-
+export default function DominioPage() {
+  const [tenant, setTenant] = useState<Tenant | null>(null);
+  const [custom, setCustom] = useState("");
+  const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
   const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN ?? "nossocasamento.com.br";
-  const plan = PLANS[tenant!.plan as keyof typeof PLANS];
+
+  useEffect(() => {
+    (async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase.from("tenants").select("*").eq("user_id", user.id).single();
+      if (data) {
+        setTenant(data as Tenant);
+        setCustom(data.custom_domain ?? "");
+        setPassword(data.site_password ?? "");
+      }
+    })();
+  }, []);
+
+  async function save() {
+    if (!tenant) return;
+    const supabase = createClient();
+    await supabase
+      .from("tenants")
+      .update({
+        site_password: password || null,
+        custom_domain: custom || null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", tenant.id);
+    setMsg("Salvo. No DNS, aponte o CNAME para cname.vercel-dns.com");
+  }
+
+  if (!tenant) return <p>Carregando...</p>;
+  const plan = PLANS[tenant.plan as PlanId];
 
   return (
     <div className="mx-auto max-w-4xl">
-      <h1 className="font-serif text-3xl font-bold text-wine">Domínio</h1>
-      <p className="mt-1 text-wine/70">Endereço do seu site de casamento</p>
-
+      <h1 className="font-serif text-3xl font-bold text-wine">Domínio e senha</h1>
       <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
         <h2 className="font-semibold text-wine">Endereço atual</h2>
         <p className="mt-3 rounded-lg bg-cream px-4 py-3 font-mono text-wine">
-          https://{tenant!.slug}.{appDomain}
-        </p>
-        <p className="mt-2 text-sm text-wine/60">
-          Em produção, configure wildcard DNS: *.{appDomain} → Vercel
+          https://{tenant.slug}.{appDomain}
         </p>
       </div>
-
+      <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm">
+        <h2 className="font-semibold text-wine">Senha para convidados</h2>
+        <p className="mt-1 text-sm text-wine/70">Deixe vazio para o site ficar aberto.</p>
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mt-3 w-full rounded-lg border border-wine/20 px-4 py-2"
+        />
+      </div>
       {plan.customDomain ? (
-        <div className="mt-6 rounded-2xl border border-sage/30 bg-green-50 p-6">
-          <h2 className="font-semibold text-wine">Domínio personalizado</h2>
-          <p className="mt-2 text-sm text-wine/70">
-            Plano Completo inclui domínio próprio (ex: mariaejoao.com.br).
+        <div className="mt-6 rounded-2xl bg-white p-6 shadow-sm">
+          <h2 className="font-semibold text-wine">Domínio próprio</h2>
+          <input
+            value={custom}
+            onChange={(e) => setCustom(e.target.value)}
+            placeholder="mariaejoao.com.br"
+            className="mt-3 w-full rounded-lg border border-wine/20 px-4 py-2"
+          />
+          <p className="mt-2 text-xs text-wine/60">
+            Compre no Registro.br ou Hostinger. CNAME para cname.vercel-dns.com.
           </p>
-          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-wine/80">
-            <li>Compre o domínio no Hostinger ou Registro.br</li>
-            <li>Aponte CNAME para cname.vercel-dns.com</li>
-            <li>Adicione o domínio no painel Vercel do projeto</li>
-          </ol>
         </div>
       ) : (
-        <div className="mt-6 rounded-2xl bg-rose/20 p-6">
-          <p className="text-sm text-wine">
-            Upgrade para <strong>Essencial</strong> (subdomínio premium) ou{" "}
-            <strong>Completo</strong> (domínio .com.br) em{" "}
-            <a href="/app/planos" className="font-semibold underline">
-              Planos
-            </a>
-          </p>
-        </div>
+        <p className="mt-6 text-sm text-wine/70">
+          Domínio .com.br entra no plano Completo.
+        </p>
       )}
+      <button onClick={save} className="mt-6 rounded-full bg-wine px-6 py-2 font-semibold text-white">
+        Salvar
+      </button>
+      {msg && <p className="mt-3 text-sm text-sage">{msg}</p>}
     </div>
   );
 }

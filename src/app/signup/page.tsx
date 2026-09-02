@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Heart } from "lucide-react";
-import { slugify } from "@/lib/utils";
+import { slugify, defaultSiteContent, TEMPLATES } from "@/lib/utils";
+import type { TemplateId } from "@/lib/constants";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -18,6 +19,11 @@ export default function SignupPage() {
   const [slug, setSlug] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [templateId, setTemplateId] = useState<TemplateId>("classic");
+  const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [heroSubtitle, setHeroSubtitle] = useState(
+    "Estamos muito felizes em compartilhar este momento com vocês",
+  );
 
   function handleNamesChange(p1: string, p2: string) {
     setPartner1(p1);
@@ -77,32 +83,30 @@ export default function SignupPage() {
       .single();
 
     if (tenant) {
+      const content = defaultSiteContent();
+      content.heroSubtitle = heroSubtitle;
+      if (content.ceremony) content.ceremony.date = weddingDate;
+      if (content.reception) content.reception.date = weddingDate;
+      const tpl = TEMPLATES.find((t) => t.id === templateId) ?? TEMPLATES[0];
+
+      if (coverFile) {
+        const path = `${authData.user.id}/cover-${Date.now()}-${coverFile.name}`;
+        const { error: upErr } = await supabase.storage
+          .from("wedding-photos")
+          .upload(path, coverFile);
+        if (!upErr) {
+          const {
+            data: { publicUrl },
+          } = supabase.storage.from("wedding-photos").getPublicUrl(path);
+          content.coverPhotoUrl = publicUrl;
+        }
+      }
+
       await supabase.from("sites").insert({
         tenant_id: tenant.id,
-        template_id: "classic",
-        theme_color: "#8b5a6b",
-        content: {
-          heroSubtitle: "Estamos muito felizes em compartilhar este momento com vocês",
-          story: "Nossa história começou de um jeito especial.",
-          ceremony: {
-            title: "Cerimônia",
-            date: weddingDate,
-            time: "16:00",
-            venue: "Local da cerimônia",
-            address: "",
-          },
-          reception: {
-            title: "Recepção",
-            date: weddingDate,
-            time: "18:00",
-            venue: "Local da festa",
-            address: "",
-          },
-          gallery: [],
-          dressCode: "Traje social",
-          travel: "",
-          registryMessage: "Sua presença é o melhor presente!",
-        },
+        template_id: templateId,
+        theme_color: tpl.defaultColor,
+        content,
       });
     }
 
@@ -156,6 +160,40 @@ export default function SignupPage() {
                   onChange={(e) => setWeddingDate(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-wine/80">Uma frase do convite</label>
+                <input
+                  value={heroSubtitle}
+                  onChange={(e) => setHeroSubtitle(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-wine/80">Foto de capa</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)}
+                  className="mt-1 w-full text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-wine/80">Jeito do site</label>
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {TEMPLATES.map((t) => (
+                    <button
+                      type="button"
+                      key={t.id}
+                      onClick={() => setTemplateId(t.id)}
+                      className={`rounded-lg border p-2 text-xs ${
+                        templateId === t.id ? "border-wine bg-rose/10" : "border-wine/10"
+                      }`}
+                    >
+                      {t.name}
+                    </button>
+                  ))}
+                </div>
               </div>
               <button
                 type="button"

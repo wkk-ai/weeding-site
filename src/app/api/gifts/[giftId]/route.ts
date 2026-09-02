@@ -29,7 +29,7 @@ export async function GET(
 
   const { data: gift } = await supabase
     .from("gifts")
-    .select("title, price_cents, funded_cents, status")
+    .select("title, price_cents, funded_cents, status, photo_url")
     .eq("id", giftId)
     .eq("tenant_id", tenant?.id ?? "")
     .single();
@@ -44,5 +44,6 @@ export async function GET(
     title: gift.title,
     price_cents: gift.price_cents - gift.funded_cents,
     fee_percent: plan.giftFeePercent,
+    photo_url: gift.photo_url ?? null,
   });
 }

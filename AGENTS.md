@@ -14,5 +14,5 @@ This repo is private. GitHub Pages is the review surface for Cursor mobile (loca
 
 - Live preview: https://wkk-ai.github.io/weeding-site/
 - Deploys on every push to `main` via `.github/workflows/github-pages.yml`
-- Static pages only: landing, `/demo/`, `/login/`, `/signup/`. Dashboard, RSVP APIs, and payments are not included.
+- Static pages only: landing, `/demo/` (RSVP, presentes, PIX, senha, depois da festa), `/contato/`, `/login/`, `/signup/`. Couple dashboard, live `/s/{slug}`, and real payments need a Node host.
 
