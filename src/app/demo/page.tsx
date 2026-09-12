@@ -6,10 +6,11 @@ export default function DemoPage() {
     <WeddingSiteView
       tenant={demoTenant}
       templateId="classic"
-      themeColor="#8b5a6b"
+      themeColor="#7a3e48"
       content={demoContent}
       showBranding={false}
       siteBase="/demo"
+      previewMode={false}
     />
   );
 }

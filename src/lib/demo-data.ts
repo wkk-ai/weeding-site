@@ -15,8 +15,8 @@ export const demoTenant: Tenant = {
   asaas_wallet_id: null,
   pix_key: "maria.joao@nossocasamento.com.br",
   site_password: null,
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
+  created_at: "2026-01-01T00:00:00.000Z",
+  updated_at: "2026-01-01T00:00:00.000Z",
 };
 
 export const demoContent: SiteContent = {
@@ -64,7 +64,8 @@ export const demoContent: SiteContent = {
     { id: "t3", time: "18:30", title: "Recepção", description: "Jantar, pista e o bolo." },
     { id: "t4", time: "22:00", title: "Festa", description: "Até o último forró." },
   ],
-  registryMessage: "Sua presença é o melhor presente. Se quiser nos ajudar a começar, a lista está aqui — PIX na hora.",
+  registryMessage:
+    "A presença de vocês já é o presente. Se quiserem nos presentear, escolham uma cota — lua de mel, casa ou um jantar nosso. O valor chega via PIX, com carinho e sem constrangimento.",
   thankYouMessage:
     "Obrigado por estar com a gente. Guardamos cada abraço, cada PIX e cada “sim” como parte do dia.",
   musicNote: "Pedido especial: “Onde anda você” no primeiro baile.",

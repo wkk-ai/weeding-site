@@ -18,6 +18,7 @@ export default function DemoPrivatePage() {
         content={demoContent}
         showBranding={false}
         siteBase="/demo"
+        previewMode={false}
       />
     </PasswordGate>
   );

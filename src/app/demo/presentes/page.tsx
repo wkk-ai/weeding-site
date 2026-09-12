@@ -23,7 +23,7 @@ export default function DemoGiftsPage() {
               description={gift.description}
               priceCents={gift.price_cents}
               fundedCents={gift.funded_cents}
-              themeColor="#8b5a6b"
+              themeColor="#7a3e48"
               href={`/demo/presentes/${gift.id}`}
               photoUrl={gift.photo_url}
             />

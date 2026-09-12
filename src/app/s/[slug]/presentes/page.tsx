@@ -50,7 +50,7 @@ export default async function GiftsPage({
           ))}
           {(!gifts || gifts.length === 0) && (
             <p className="col-span-full text-center text-wine/60">
-              Lista de presentes em breve.
+              A lista ainda está sendo escrita. Voltem em breve.
             </p>
           )}
         </div>

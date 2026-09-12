@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap");
 @import "tailwindcss";
 
 @theme inline {
@@ -8,7 +7,7 @@
   --color-wine-light: #8b5a6b;
   --color-rose: #c49a8a;
   --color-sage: #5c8b5c;
-  --font-serif: "Playfair Display", Georgia, serif;
+  --font-serif: var(--font-cormorant), "Palatino Linotype", serif;
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
 }
 
@@ -20,4 +19,168 @@ body {
 
 .font-serif {
   font-family: var(--font-serif);
+}
+
+.font-script {
+  font-family: var(--font-great-vibes), cursive;
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel-face), serif;
+}
+
+.font-baskerville {
+  font-family: var(--font-libre), Georgia, serif;
+}
+
+.font-outfit {
+  font-family: var(--font-outfit-face), system-ui, sans-serif;
+}
+
+.font-papel {
+  font-family: var(--font-baskerville);
+}
+
+.font-costa {
+  font-family: var(--font-outfit);
+}
+
+.font-noite {
+  font-family: var(--font-outfit);
+}
+
+.wedding-root[data-skin="papel"] {
+  --wed-bg: #e8dcc8;
+  --wed-card: #fffdf8;
+  --wed-ink: #3b2f28;
+  --wed-mute: #5c4a40;
+  --wed-meta: #8a6a55;
+  --wed-frame: #d7c4aa;
+  --wed-gold: #c4a574;
+}
+
+.wedding-root[data-skin="costa"] {
+  --wed-bg: #f6efe6;
+  --wed-card: #f6efe6;
+  --wed-ink: #3a2a24;
+  --wed-mute: #8a746c;
+  --wed-meta: #c4a574;
+  --wed-frame: #e6d9cc;
+  --wed-gold: #c4a574;
+}
+
+.wedding-root[data-skin="noite"] {
+  --wed-bg: #0c0a09;
+  --wed-card: #12100e;
+  --wed-ink: #eadcc6;
+  --wed-mute: rgba(234, 220, 198, 0.78);
+  --wed-meta: #c9a962;
+  --wed-frame: rgba(201, 169, 98, 0.2);
+  --wed-gold: #c9a962;
+}
+
+@keyframes wedding-drift {
+  to {
+    transform: scale(1.08) translateY(-2%);
+  }
+}
+
+@keyframes wedding-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wedding-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.motion-hero-drift {
+  animation: wedding-drift 28s ease-in-out infinite alternate;
+}
+
+.motion-card-in {
+  animation: wedding-card-in 800ms ease-out;
+}
+
+.motion-reveal {
+  animation: wedding-reveal 600ms ease-out;
+}
+
+.motion-delay-1 {
+  animation-delay: 60ms;
+}
+.motion-delay-2 {
+  animation-delay: 120ms;
+}
+.motion-delay-3 {
+  animation-delay: 180ms;
+}
+.motion-delay-4 {
+  animation-delay: 240ms;
+}
+
+.motion-tile-zoom {
+  transition: transform 8s ease;
+}
+.motion-tile-zoom:hover {
+  transform: scale(1.06);
+}
+
+.motion-line {
+  transform-origin: center;
+}
+
+.motion-nav-solid {
+  transition: background-color 250ms ease, color 250ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-hero-drift,
+  .motion-card-in,
+  .motion-reveal,
+  .motion-tile-zoom,
+  .motion-splash-in,
+  .motion-splash-out {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+.phone-frame {
+  width: 390px;
+  height: 844px;
+  max-height: calc(100dvh - 140px);
+  border-radius: 36px;
+  border: 8px solid #1a1412;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(26, 20, 18, 0.28);
+  container-type: size;
+}
+
+.phone-frame .wedding-root {
+  min-height: 100cqh;
+}
+
+.phone-frame .wedding-root header {
+  min-height: 100cqh !important;
+  padding-bottom: 3rem;
+}
+
+.phone-frame .wedding-root header .relative.z-10 {
+  min-height: calc(100cqh - 6rem);
 }

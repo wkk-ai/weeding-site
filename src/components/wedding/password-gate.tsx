@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function PasswordGate({
   password,
@@ -14,12 +14,13 @@ export function PasswordGate({
   hint?: string;
 }) {
   const key = storageKey;
-  const [ok, setOk] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return sessionStorage.getItem(key) === "1";
-  });
+  const [ok, setOk] = useState(false);
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (sessionStorage.getItem(key) === "1") setOk(true);
+  }, [key]);
 
   if (ok) return children;
 

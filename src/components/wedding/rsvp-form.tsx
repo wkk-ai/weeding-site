@@ -86,15 +86,27 @@ export function RsvpForm({
             // eslint-disable-next-line @next/next/no-img-element
             <img src={photo} alt="" className="mx-auto h-24 w-24 rounded-full object-cover" />
           )}
-          <h1 className="mt-4 font-serif text-2xl font-bold text-wine">Obrigado!</h1>
+          <h1 className="mt-4 font-serif text-2xl italic text-wine">Obrigado</h1>
           <p className="mt-2 text-wine/70">
             {status === "confirmed"
-              ? `${names} mal podem esperar você no dia ${formatDate(date)}.`
+              ? `${names} mal podem esperar vocês no dia ${formatDate(date)}.`
               : "Sentiremos sua falta — obrigado por avisar."}
           </p>
-          <Link href={backHref} className="mt-6 inline-block font-semibold text-wine underline">
-            Voltar ao site
-          </Link>
+          {status === "confirmed" && (
+            <div className="mt-6 flex flex-col gap-2">
+              <Link href={backHref} className="font-semibold text-wine underline">
+                Ver o caminho
+              </Link>
+              <Link href={backHref.replace(/\/rsvp\/?$/, "/presentes")} className="text-sm text-wine/70 underline">
+                Presentear
+              </Link>
+            </div>
+          )}
+          {status === "declined" && (
+            <Link href={backHref} className="mt-6 inline-block font-semibold text-wine underline">
+              Voltar ao site
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -108,12 +120,13 @@ export function RsvpForm({
       >
         {photo && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt="" className="mx-auto h-20 w-20 rounded-full object-cover" />
+          <img src={photo} alt="" className="-mx-8 -mt-8 mb-6 h-40 w-[calc(100%+4rem)] object-cover" />
         )}
-        <h1 className="mt-4 font-serif text-2xl font-bold text-wine">Confirmar presença</h1>
+        <h1 className="font-serif text-3xl italic text-wine">Vocês vêm?</h1>
         <p className="mt-1 text-sm text-wine/70">
           {names} · {formatDate(date)}
         </p>
+        <p className="mt-2 text-xs text-wine/50">Leva 20 segundos</p>
         <div className="mt-6 space-y-4">
           <div>
             <label className="text-sm font-medium text-wine/80">Seu nome *</label>
@@ -144,7 +157,7 @@ export function RsvpForm({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-wine/80">Você vai?</label>
+            <label className="text-sm font-medium text-wine/80">Vocês vêm?</label>
             <div className="mt-2 flex gap-4">
               {(["confirmed", "declined"] as const).map((s) => (
                 <label key={s} className="flex items-center gap-2">
@@ -153,7 +166,7 @@ export function RsvpForm({
                     checked={status === s}
                     onChange={() => setStatus(s)}
                   />
-                  {s === "confirmed" ? "Sim, estarei lá!" : "Não poderei ir"}
+                  {s === "confirmed" ? "Sim, vamos" : "Não poderemos ir"}
                 </label>
               ))}
             </div>
@@ -199,24 +212,18 @@ export function RsvpForm({
                 </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-wine/80">Preferência de menu</label>
-                <select
+                <label className="text-sm font-medium text-wine/80">Alguma restrição alimentar?</label>
+                <input
                   value={meal}
                   onChange={(e) => setMeal(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3"
-                >
-                  <option value="">Selecione</option>
-                  <option value="carne">Carne</option>
-                  <option value="frango">Frango</option>
-                  <option value="peixe">Peixe</option>
-                  <option value="vegetariano">Vegetariano</option>
-                  <option value="vegano">Vegano</option>
-                </select>
+                  placeholder="Opcional"
+                />
               </div>
             </>
           )}
           <div>
-            <label className="text-sm font-medium text-wine/80">Mensagem (opcional)</label>
+            <label className="text-sm font-medium text-wine/80">Recado para o casal</label>
             <textarea
               rows={3}
               value={notes}
@@ -224,7 +231,7 @@ export function RsvpForm({
               className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3"
             />
           </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p className="text-sm text-red-600">Não deu certo. Tente de novo.</p>}
           <button
             type="submit"
             disabled={loading}

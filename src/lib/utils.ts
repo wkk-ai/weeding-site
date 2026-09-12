@@ -7,29 +7,33 @@ export interface TemplateMeta {
   description: string;
   defaultColor: string;
   fontClass: string;
+  preview: string;
 }
 
 export const TEMPLATES: TemplateMeta[] = [
   {
     id: "classic",
-    name: "Clássico",
-    description: "Elegante e atemporal, perfeito para cerimônias tradicionais.",
-    defaultColor: "#8b5a6b",
-    fontClass: "font-serif",
+    name: "Papel",
+    description: "Convite em papel, cerimônia clássica.",
+    defaultColor: "#7a3e48",
+    fontClass: "font-papel",
+    preview: "/photos/altar.jpg",
   },
   {
     id: "garden",
-    name: "Jardim",
-    description: "Tons verdes e naturais para casamentos ao ar livre.",
-    defaultColor: "#5c7a5c",
-    fontClass: "font-serif",
+    name: "Costa",
+    description: "Praia, sal, luz de fim de tarde.",
+    defaultColor: "#c4a574",
+    fontClass: "font-costa",
+    preview: "/photos/jardim.jpg",
   },
   {
     id: "minimal",
-    name: "Minimal",
-    description: "Limpo e moderno, foco nas fotos e no essencial.",
-    defaultColor: "#2d2a26",
-    fontClass: "font-sans",
+    name: "Noite",
+    description: "Preto, ouro, festa à noite.",
+    defaultColor: "#c9a962",
+    fontClass: "font-noite",
+    preview: "/photos/beijo.jpg",
   },
 ];
 
@@ -42,18 +46,18 @@ export function defaultSiteContent(): SiteContent {
       title: "Cerimônia",
       date: "",
       time: "16:00",
-      venue: "Local da cerimônia",
-      address: "Endereço completo",
+      venue: "",
+      address: "",
     },
     reception: {
       title: "Recepção",
       date: "",
       time: "18:00",
-      venue: "Local da festa",
-      address: "Endereço completo",
+      venue: "",
+      address: "",
     },
-    travel: "Informações de hospedagem e como chegar.",
-    dressCode: "Traje social",
+    travel: "",
+    dressCode: "",
     gallery: [],
     registryMessage:
       "Sua presença é o melhor presente! Se desejar nos presentear, confira nossa lista.",
@@ -88,17 +92,29 @@ export function formatCurrency(cents: number): string {
   }).format(cents / 100);
 }
 
+const MONTHS_PT = [
+  "janeiro",
+  "fevereiro",
+  "março",
+  "abril",
+  "maio",
+  "junho",
+  "julho",
+  "agosto",
+  "setembro",
+  "outubro",
+  "novembro",
+  "dezembro",
+];
+
 export function formatDate(dateStr: string): string {
   if (!dateStr) return "";
   const [y, m, d] = dateStr.split("-");
-  const date = new Date(Number(y), Number(m) - 1, Number(d));
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date);
+  const month = MONTHS_PT[Number(m) - 1];
+  if (!month) return dateStr;
+  return `${Number(d)} de ${month} de ${y}`;
 }
 
 export function coupleDisplayName(p1: string, p2: string): string {
-  return `${p1} & ${p2}`;
+  return `${p1} e ${p2}`;
 }

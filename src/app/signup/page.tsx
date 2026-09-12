@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Heart } from "lucide-react";
 import { slugify, defaultSiteContent, TEMPLATES } from "@/lib/utils";
+import { loadDraft, clearDraft } from "@/lib/criar-draft";
 import type { TemplateId } from "@/lib/constants";
 
 export default function SignupPage() {
@@ -24,6 +25,17 @@ export default function SignupPage() {
   const [heroSubtitle, setHeroSubtitle] = useState(
     "Estamos muito felizes em compartilhar este momento com vocês",
   );
+
+  useEffect(() => {
+    const d = loadDraft();
+    if (!d.couple.partner1 && !d.couple.partner2) return;
+    setPartner1(d.couple.partner1);
+    setPartner2(d.couple.partner2);
+    setWeddingDate(d.couple.weddingDate);
+    setSlug(d.couple.slug || slugify(`${d.couple.partner1}-${d.couple.partner2}`));
+    setTemplateId(d.site.templateId);
+    if (d.content.heroSubtitle) setHeroSubtitle(d.content.heroSubtitle);
+  }, []);
 
   function handleNamesChange(p1: string, p2: string) {
     setPartner1(p1);
@@ -83,8 +95,14 @@ export default function SignupPage() {
       .single();
 
     if (tenant) {
-      const content = defaultSiteContent();
-      content.heroSubtitle = heroSubtitle;
+      const draft = loadDraft();
+      const content = {
+        ...defaultSiteContent(),
+        ...draft.content,
+        heroSubtitle,
+        gallery: draft.content.gallery?.filter((p) => p.url.startsWith("http")) ?? [],
+      };
+      if (content.coverPhotoUrl?.startsWith("data:")) content.coverPhotoUrl = "";
       if (content.ceremony) content.ceremony.date = weddingDate;
       if (content.reception) content.reception.date = weddingDate;
       const tpl = TEMPLATES.find((t) => t.id === templateId) ?? TEMPLATES[0];
@@ -105,9 +123,10 @@ export default function SignupPage() {
       await supabase.from("sites").insert({
         tenant_id: tenant.id,
         template_id: templateId,
-        theme_color: tpl.defaultColor,
+        theme_color: draft.site.themeColor || tpl.defaultColor,
         content,
       });
+      clearDraft();
     }
 
     router.push("/app");

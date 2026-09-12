@@ -46,14 +46,14 @@ export function ShareBar({
         })}
         target="_blank"
         rel="noreferrer"
-        className="rounded-full border border-white/50 px-4 py-2 font-semibold"
+        className="rounded-full border border-current px-4 py-2 font-semibold opacity-80"
       >
         Agenda
       </a>
       <button
         type="button"
         onClick={copy}
-        className="rounded-full border border-white/50 px-4 py-2 font-semibold"
+        className="rounded-full border border-current px-4 py-2 font-semibold opacity-80"
       >
         {copied ? "Link copiado" : "Copiar link"}
       </button>

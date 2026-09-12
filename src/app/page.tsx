@@ -34,8 +34,14 @@ export default function HomePage() {
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
-                href="/demo"
+                href="/criar"
                 className="rounded-full bg-[#c4a574] px-8 py-4 font-semibold text-[#2a1c18]"
+              >
+                Montar o site agora
+              </Link>
+              <Link
+                href="/demo"
+                className="rounded-full border border-white/70 px-8 py-4 font-semibold text-white"
               >
                 Abrir um casamento de verdade
               </Link>
@@ -93,9 +99,9 @@ export default function HomePage() {
             <h2 className="text-center font-serif text-4xl italic text-wine">Três jeitos de sentir</h2>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {[
-                { href: "/demo", name: "Clássico", img: "/photos/altar.jpg" },
-                { href: "/demo/jardim", name: "Jardim", img: "/photos/jardim.jpg" },
-                { href: "/demo/minimal", name: "Editorial", img: "/photos/beijo.jpg" },
+                { href: "/demo", name: "Papel", img: "/photos/altar.jpg" },
+                { href: "/demo/jardim", name: "Costa", img: "/photos/jardim.jpg" },
+                { href: "/demo/minimal", name: "Noite", img: "/photos/beijo.jpg" },
               ].map((t) => (
                 <Link key={t.name} href={t.href} className="group overflow-hidden rounded-2xl">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

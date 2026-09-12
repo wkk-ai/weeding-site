@@ -17,6 +17,7 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium text-wine/80 md:flex">
           <Link href="#como-funciona" className="hover:text-wine">Como funciona</Link>
+          <Link href="/criar" className="hover:text-wine">Montar o site</Link>
           <Link href="/demo" className="hover:text-wine">Ver um casamento</Link>
           <Link href="#precos" className="hover:text-wine">Preços</Link>
           <a href={INSTAGRAM_URL} className="hover:text-wine" target="_blank" rel="noreferrer">Instagram</a>
@@ -43,6 +44,7 @@ export function SiteHeader() {
       {open && (
         <nav className="space-y-3 border-t border-wine/10 px-4 py-4 md:hidden">
           <Link href="#como-funciona" className="block text-wine" onClick={() => setOpen(false)}>Como funciona</Link>
+          <Link href="/criar" className="block text-wine" onClick={() => setOpen(false)}>Montar o site</Link>
           <Link href="/demo" className="block text-wine" onClick={() => setOpen(false)}>Ver um casamento</Link>
           <Link href="#precos" className="block text-wine" onClick={() => setOpen(false)}>Preços</Link>
           <Link href="/contato" className="block text-wine" onClick={() => setOpen(false)}>WhatsApp</Link>

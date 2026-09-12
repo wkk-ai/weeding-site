@@ -6,10 +6,11 @@ export default function DemoMinimalPage() {
     <WeddingSiteView
       tenant={demoTenant}
       templateId="minimal"
-      themeColor="#2d2a26"
+      themeColor="#c9a962"
       content={{ ...demoContent, coverPhotoUrl: demoContent.gallery[5]?.url ?? demoContent.coverPhotoUrl }}
       showBranding={false}
       siteBase="/demo"
+      previewMode={false}
     />
   );
 }

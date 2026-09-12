@@ -6,10 +6,11 @@ export default function DemoGardenPage() {
     <WeddingSiteView
       tenant={demoTenant}
       templateId="garden"
-      themeColor="#5c7a5c"
+      themeColor="#c4a574"
       content={{ ...demoContent, coverPhotoUrl: demoContent.gallery[2]?.url }}
       showBranding={false}
       siteBase="/demo"
+      previewMode={false}
     />
   );
 }

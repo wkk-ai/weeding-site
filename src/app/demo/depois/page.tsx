@@ -8,7 +8,7 @@ export default function DemoAfterPage() {
     <WeddingSiteView
       tenant={{ ...demoTenant, wedding_date: past }}
       templateId="classic"
-      themeColor="#8b5a6b"
+      themeColor="#7a3e48"
       content={{
         ...demoContent,
         ceremony: { ...demoContent.ceremony!, date: past },
@@ -16,6 +16,7 @@ export default function DemoAfterPage() {
       }}
       showBranding={false}
       siteBase="/demo"
+      previewMode={false}
     />
   );
 }
