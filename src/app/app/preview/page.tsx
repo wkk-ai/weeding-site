@@ -3,8 +3,8 @@ export const dynamic = "force-dynamic";
 import { createClient } from "@/lib/supabase/server";
 import { WeddingSiteView } from "@/components/wedding/wedding-site";
 import type { SiteContent, Tenant } from "@/lib/types";
-import type { TemplateId } from "@/lib/constants";
 import { defaultSiteContent } from "@/lib/utils";
+import { isTemplateId } from "@/lib/wedding-theme";
 import { redirect } from "next/navigation";
 
 export default async function PreviewPage() {
@@ -17,6 +17,7 @@ export default async function PreviewPage() {
   const { data: tenant } = await supabase.from("tenants").select("*").eq("user_id", user.id).single();
   if (!tenant) redirect("/signup");
   const { data: site } = await supabase.from("sites").select("*").eq("tenant_id", tenant.id).single();
+  const rawId = site?.template_id;
   const content = {
     ...defaultSiteContent(),
     ...((site?.content ?? {}) as SiteContent),
@@ -29,7 +30,7 @@ export default async function PreviewPage() {
       </p>
       <WeddingSiteView
         tenant={tenant as Tenant}
-        templateId={(site?.template_id ?? "classic") as TemplateId}
+        templateId={isTemplateId(rawId) ? rawId : "classic"}
         themeColor={site?.theme_color ?? "#8b5a6b"}
         content={content}
         showBranding={false}

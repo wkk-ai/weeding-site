@@ -242,7 +242,7 @@ export function BuilderShell({
           {step === 2 && (
             <section className="space-y-5 rounded-2xl bg-white p-6">
               <h2 className="font-serif text-2xl italic">A cara</h2>
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {TEMPLATES.map((t) => (
                   <button
                     key={t.id}

@@ -199,7 +199,7 @@ export default function SignupPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-wine/80">Jeito do site</label>
-                <div className="mt-2 grid grid-cols-3 gap-2">
+                <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {TEMPLATES.map((t) => (
                     <button
                       type="button"

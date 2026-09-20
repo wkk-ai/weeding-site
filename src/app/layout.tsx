@@ -55,6 +55,12 @@ export const metadata: Metadata = {
     "Crie seu site de casamento em 5 minutos. Templates lindos, RSVP, lista de presentes com taxa a partir de 1,99%.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html

@@ -1,41 +1,7 @@
-import type { TemplateId } from "./constants";
 import type { SiteContent } from "./types";
 
-export interface TemplateMeta {
-  id: TemplateId;
-  name: string;
-  description: string;
-  defaultColor: string;
-  fontClass: string;
-  preview: string;
-}
-
-export const TEMPLATES: TemplateMeta[] = [
-  {
-    id: "classic",
-    name: "Papel",
-    description: "Convite em papel, cerimônia clássica.",
-    defaultColor: "#7a3e48",
-    fontClass: "font-papel",
-    preview: "/photos/altar.jpg",
-  },
-  {
-    id: "garden",
-    name: "Costa",
-    description: "Praia, sal, luz de fim de tarde.",
-    defaultColor: "#c4a574",
-    fontClass: "font-costa",
-    preview: "/photos/jardim.jpg",
-  },
-  {
-    id: "minimal",
-    name: "Noite",
-    description: "Preto, ouro, festa à noite.",
-    defaultColor: "#c9a962",
-    fontClass: "font-noite",
-    preview: "/photos/beijo.jpg",
-  },
-];
+export type { TemplateMeta } from "./wedding-theme";
+export { TEMPLATES, getTemplate } from "./wedding-theme";
 
 export function defaultSiteContent(): SiteContent {
   return {
@@ -69,10 +35,6 @@ export function defaultSiteContent(): SiteContent {
     thankYouMessage: "Obrigado por celebrar conosco.",
     musicNote: "",
   };
-}
-
-export function getTemplate(id: TemplateId) {
-  return TEMPLATES.find((t) => t.id === id) ?? TEMPLATES[0];
 }
 
 export function slugify(text: string): string {

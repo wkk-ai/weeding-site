@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteHeader, PricingCards } from "@/components/marketing/site-header";
 import { asset } from "@/lib/assets";
 import { CONTACT_WHATSAPP, CONTACT_EMAIL, INSTAGRAM_URL } from "@/lib/constants";
+import { THEMES, demoPath } from "@/lib/wedding-theme";
 
 const moments = [
   { src: "/photos/altar.jpg", title: "O altar", text: "A luz da tarde, o sim." },
@@ -94,22 +95,32 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="bg-white px-4 py-20">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="text-center font-serif text-4xl italic text-wine">Três jeitos de sentir</h2>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {[
-                { href: "/demo", name: "Papel", img: "/photos/altar.jpg" },
-                { href: "/demo/jardim", name: "Costa", img: "/photos/jardim.jpg" },
-                { href: "/demo/minimal", name: "Noite", img: "/photos/beijo.jpg" },
-              ].map((t) => (
-                <Link key={t.name} href={t.href} className="group overflow-hidden rounded-2xl">
+        <section className="bg-white px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-center font-serif text-3xl italic text-wine sm:text-4xl">
+              Doze jeitos de sentir
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-center text-wine/70">
+              Papel, Costa, Noite e mais nove. Todos cabem no celular e na tela grande.
+            </p>
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {THEMES.map((t) => (
+                <Link key={t.id} href={demoPath(t.id)} className="group overflow-hidden rounded-2xl">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={asset(t.img)} alt={t.name} className="h-64 w-full object-cover transition group-hover:scale-105" />
-                  <p className="bg-cream p-4 font-serif text-xl text-wine">{t.name}</p>
+                  <img
+                    src={asset(t.preview)}
+                    alt={t.name}
+                    className="aspect-[4/5] w-full object-cover transition group-hover:scale-105"
+                  />
+                  <p className="bg-cream p-3 font-serif text-lg text-wine sm:p-4 sm:text-xl">{t.name}</p>
                 </Link>
               ))}
             </div>
+            <p className="mt-6 text-center">
+              <Link href="/demo/modelos" className="font-semibold text-wine underline">
+                Ver todos os exemplos
+              </Link>
+            </p>
             <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm font-semibold text-wine">
               <Link href="/demo/rsvp" className="underline">
                 Confirmar presença

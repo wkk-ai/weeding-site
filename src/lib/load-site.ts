@@ -1,6 +1,6 @@
 import { createServiceClient } from "@/lib/supabase/admin";
 import type { SiteContent, Tenant } from "@/lib/types";
-import type { TemplateId } from "@/lib/constants";
+import { isTemplateId } from "@/lib/wedding-theme";
 
 export async function loadPublishedSite(slug: string) {
   try {
@@ -17,10 +17,11 @@ export async function loadPublishedSite(slug: string) {
       .select("*")
       .eq("tenant_id", tenant.id)
       .single();
+    const rawId = site?.template_id;
     return {
       tenant: tenant as Tenant,
       content: (site?.content ?? { gallery: [], padrinhos: [], timeline: [] }) as SiteContent,
-      templateId: (site?.template_id ?? "classic") as TemplateId,
+      templateId: isTemplateId(rawId) ? rawId : "classic",
       themeColor: site?.theme_color ?? "#8b5a6b",
     };
   } catch {

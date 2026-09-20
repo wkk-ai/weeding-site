@@ -46,7 +46,20 @@ export const ARCHIVE_PRICE_CENTS = 3990;
 
 export const ARCHIVE_PRICE = 39.9;
 
-export const TEMPLATE_IDS = ["classic", "garden", "minimal"] as const;
+export const TEMPLATE_IDS = [
+  "classic",
+  "garden",
+  "minimal",
+  "editorial",
+  "filme",
+  "bosque",
+  "praia",
+  "serra",
+  "vintage",
+  "moderno",
+  "tropical",
+  "capela",
+] as const;
 export type TemplateId = (typeof TEMPLATE_IDS)[number];
 
 export const CARD_SURCHARGE_PERCENT = 2.0;

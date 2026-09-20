@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+}
+
 @theme inline {
   --color-cream: #faf7f4;
   --color-cream-dark: #f3ede6;
@@ -49,6 +57,13 @@ body {
   font-family: var(--font-outfit);
 }
 
+.wedding-root {
+  background: var(--wed-bg, #e8dcc8);
+  color: var(--wed-ink, #3b2f28);
+  overflow-x: clip;
+}
+
+.wedding-root[data-skin="classic"],
 .wedding-root[data-skin="papel"] {
   --wed-bg: #e8dcc8;
   --wed-card: #fffdf8;
@@ -59,6 +74,7 @@ body {
   --wed-gold: #c4a574;
 }
 
+.wedding-root[data-skin="garden"],
 .wedding-root[data-skin="costa"] {
   --wed-bg: #f6efe6;
   --wed-card: #f6efe6;
@@ -69,6 +85,7 @@ body {
   --wed-gold: #c4a574;
 }
 
+.wedding-root[data-skin="minimal"],
 .wedding-root[data-skin="noite"] {
   --wed-bg: #0c0a09;
   --wed-card: #12100e;
@@ -177,10 +194,5 @@ body {
 }
 
 .phone-frame .wedding-root header {
-  min-height: 100cqh !important;
-  padding-bottom: 3rem;
-}
-
-.phone-frame .wedding-root header .relative.z-10 {
-  min-height: calc(100cqh - 6rem);
+  min-height: min(100cqh, 100%) !important;
 }

@@ -6,8 +6,7 @@ import { defaultSiteContent } from "@/lib/utils";
 import { uploadWeddingPhoto } from "@/lib/upload";
 import { BuilderShell, type BuilderState } from "@/components/builder/builder-shell";
 import type { SiteContent, Tenant } from "@/lib/types";
-import type { TemplateId } from "@/lib/constants";
-import { palettesFor } from "@/lib/wedding-theme";
+import { palettesFor, isTemplateId } from "@/lib/wedding-theme";
 
 export default function EditorPage() {
   const [loading, setLoading] = useState(true);
@@ -34,7 +33,7 @@ export default function EditorPage() {
       if (site) {
         setSiteId(site.id);
         const c = site.content as SiteContent;
-        const templateId = site.template_id as TemplateId;
+        const templateId = isTemplateId(site.template_id) ? site.template_id : "classic";
         const palettes = palettesFor(templateId);
         setState({
           partner1: tenant.partner1_name,

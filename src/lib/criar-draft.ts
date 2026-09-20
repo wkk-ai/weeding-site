@@ -2,6 +2,7 @@ import { asset } from "./assets";
 import { defaultSiteContent, slugify } from "./utils";
 import type { SiteContent, Tenant } from "./types";
 import type { TemplateId } from "./constants";
+import { isTemplateId } from "./wedding-theme";
 
 export const CRIAR_KEY = "nossocasamento.criar.v1";
 
@@ -79,7 +80,11 @@ export function loadDraft(): CriarDraft {
       ...parsed,
       content: { ...emptyDraft().content, ...parsed.content },
       couple: { ...emptyDraft().couple, ...parsed.couple },
-      site: { ...emptyDraft().site, ...parsed.site },
+      site: {
+        ...emptyDraft().site,
+        ...parsed.site,
+        templateId: isTemplateId(parsed.site?.templateId) ? parsed.site.templateId : "classic",
+      },
     };
   } catch {
     return emptyDraft();
