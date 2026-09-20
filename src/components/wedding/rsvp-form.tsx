@@ -41,6 +41,7 @@ export function RsvpForm({
     setError("");
 
     const eventNote = events.length ? `eventos:${events.join(",")}` : "";
+    const heads = plusOne ? Math.max(partySize, 2) : partySize;
     const payload = {
       slug,
       name,
@@ -51,7 +52,7 @@ export function RsvpForm({
       notes: [eventNote, notes].filter(Boolean).join("\n"),
       plus_one: plusOne,
       plus_one_name: plusOneName,
-      party_size: partySize,
+      party_size: heads,
       kids,
     };
 
@@ -60,7 +61,7 @@ export function RsvpForm({
       meal,
       events,
       plusOne: plusOneName,
-      partySize,
+      partySize: heads,
       declined: status === "declined",
     });
 

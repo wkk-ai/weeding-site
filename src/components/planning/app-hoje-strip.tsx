@@ -35,7 +35,7 @@ export function AppHojeStrip({
         Faltam {months} meses. {confirmed} disseram sim de {guests}. PIX {money(funded / 100)}. Teto {teto}.
       </p>
       <div className="mt-6 flex flex-wrap gap-3">
-        <Link href="/planejar" className="rounded-full bg-[#c4a574] px-6 py-3 font-semibold text-[#2a1c18]">
+        <Link href="/planejar?porta=hoje" className="rounded-full bg-[#c4a574] px-6 py-3 font-semibold text-[#2a1c18]">
           Abrir o planejamento
         </Link>
         <Link href="/app/convidados" className="rounded-full border border-white/40 px-6 py-3 font-semibold">

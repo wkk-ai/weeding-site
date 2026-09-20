@@ -7,8 +7,11 @@ export default function DemoGiftsPage() {
   return (
     <div className="min-h-screen bg-cream px-4 py-12">
       <div className="mx-auto max-w-4xl">
-        <Link href="/demo" className="text-sm text-wine/60 hover:text-wine">
-          ← Voltar ao site
+        <Link href="/planejar" className="text-sm text-wine/60 hover:text-wine">
+          ← Voltar ao planejamento
+        </Link>
+        <Link href="/demo" className="ml-4 text-sm text-wine/60 hover:text-wine">
+          Ver o site da demo
         </Link>
         <h1 className="mt-4 font-serif text-4xl font-bold text-wine">Lista de presentes</h1>
         <p className="mt-2 text-wine/70">

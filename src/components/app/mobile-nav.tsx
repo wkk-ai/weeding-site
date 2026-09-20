@@ -18,7 +18,7 @@ const nav = [
   { href: "/app/editor", icon: Edit3, label: "Site" },
   { href: "/app/convidados", icon: Users, label: "Gente" },
   { href: "/app/presentes", icon: Gift, label: "Grana" },
-  { href: "/planejar", icon: Wallet, label: "Mais" },
+  { href: "/planejar?porta=hoje", icon: Wallet, label: "Mais" },
 ];
 
 export const fullNav = [
@@ -38,7 +38,7 @@ export function MobileNav() {
           key={href}
           href={href}
           className={`flex flex-1 flex-col items-center py-2 text-[10px] ${
-            path === href ? "text-wine" : "text-wine/50"
+            path === href.split("?")[0] ? "text-wine" : "text-wine/50"
           }`}
         >
           <Icon className="h-5 w-5" />

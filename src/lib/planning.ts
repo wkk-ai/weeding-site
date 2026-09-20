@@ -89,9 +89,10 @@ export const COUPLE_SCREENS: PlanScreen[] = [
   "roteiro",
   "caderno",
   "zap",
+  "endereco",
 ];
 
-export const RAIL_MORE: PlanScreen[] = ["hotel", "papel", "roteiro", "caderno", "zap", "assessora"];
+export const RAIL_MORE: PlanScreen[] = ["hotel", "papel", "roteiro", "caderno", "zap", "assessora", "endereco"];
 
 export function money(n: number) {
   return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });

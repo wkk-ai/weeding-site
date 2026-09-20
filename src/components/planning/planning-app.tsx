@@ -228,7 +228,17 @@ export function PlanningApp({
             {screen === "grana" && <Grana plan={plan} persist={persist} go={go} buffet={buffet} confirmed={confirmed} usedPct={usedPct} account={variant === "account"} />}
             {screen === "tarefas" && <Tarefas plan={plan} persist={persist} go={go} months={months} />}
             {screen === "mesas" && <Mesas plan={plan} persist={persist} flash={flash} />}
-            {screen === "hotel" && <Hotel plan={plan} go={go} door={door} />}
+            {screen === "hotel" && (
+              <Hotel
+                plan={plan}
+                go={go}
+                door={door}
+                previewGuest={() => {
+                  setRole("guest");
+                  go("convidado");
+                }}
+              />
+            )}
             {screen === "papel" && <Papel plan={plan} persist={persist} />}
             {screen === "mais" && (
               <Mais
@@ -261,7 +271,7 @@ export function PlanningApp({
             {screen === "rsvp" && (
               <Rsvp plan={plan} go={go} confirmGuest={confirmGuest} joao={joao} flash={flash} />
             )}
-            {screen === "endereco" && <Endereco plan={plan} persist={persist} flash={flash} />}
+            {screen === "endereco" && <Endereco plan={plan} persist={persist} flash={flash} go={go} />}
           </div>
         </div>
       )}
@@ -348,6 +358,10 @@ function Criar({
     if (step < 3) persist({ ...plan, step: step + 1 });
     else go("hoje");
   };
+  const back = () => {
+    if (step > 0) persist({ ...plan, step: step - 1 });
+    else go("rua");
+  };
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <p className="text-xs uppercase tracking-[0.2em] text-wine/50">Passo {step + 1} de 4</p>
@@ -429,6 +443,9 @@ function Criar({
       )}
       <button type="button" onClick={next} className="mt-8 w-full rounded-full bg-[#c4a574] py-4 font-semibold text-[#2a1c18]">
         {step === 3 ? "Abrir o Hoje" : "Continuar"}
+      </button>
+      <button type="button" onClick={back} className="mt-3 w-full py-2 text-sm font-semibold text-wine/60">
+        Voltar
       </button>
     </div>
   );
@@ -586,8 +603,8 @@ function Gente({
           ))}
         </ul>
         <div className="mt-4 flex flex-wrap gap-2">
-          <button type="button" onClick={() => go("endereco")} className="rounded-full bg-wine px-5 py-2 text-sm font-semibold text-white">
-            Mandar o link de endereço
+          <button type="button" onClick={() => go("mesas")} className="rounded-full border border-wine/20 px-5 py-2 text-sm font-semibold text-wine">
+            Sentar no salão
           </button>
           <a
             href={whatsappShareUrl(
@@ -599,10 +616,10 @@ function Gente({
           >
             Prazo aos calados
           </a>
-          <button type="button" onClick={exportCsv} className="max-md:hidden rounded-full border border-wine/20 px-5 py-2 text-sm font-semibold text-wine">
+          <button type="button" onClick={exportCsv} className="rounded-full border border-wine/20 px-5 py-2 text-sm font-semibold text-wine">
             Baixar CSV
           </button>
-          <label className="max-md:hidden cursor-pointer rounded-full border border-wine/20 px-5 py-2 text-sm font-semibold text-wine">
+          <label className="cursor-pointer rounded-full border border-wine/20 px-5 py-2 text-sm font-semibold text-wine">
             Trazer planilha
             <input
               type="file"
@@ -805,16 +822,21 @@ function Mesas({
             {g.table ? (
               <span className="rounded-full bg-sage/15 px-2 py-1 text-[11px] uppercase text-sage">mesa {g.table}</span>
             ) : g.status === "confirmed" ? (
-              <button
-                type="button"
-                onClick={() => {
-                  persist({ ...plan, guests: plan.guests.map((x) => (x.id === g.id ? { ...x, table: 2 } : x)) });
-                  flash(`${g.name.split(" ")[0]} na mesa 2.`);
-                }}
-                className="rounded-full bg-[#c4a574] px-3 py-1 text-sm font-semibold text-[#2a1c18]"
-              >
-                Sentar na 2
-              </button>
+              <span className="flex gap-1">
+                {tables.map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => {
+                      persist({ ...plan, guests: plan.guests.map((x) => (x.id === g.id ? { ...x, table: n } : x)) });
+                      flash(`${g.name.split(" ")[0]} na mesa ${n}.`);
+                    }}
+                    className="rounded-full bg-[#c4a574] px-2 py-1 text-xs font-semibold text-[#2a1c18]"
+                  >
+                    {n}
+                  </button>
+                ))}
+              </span>
             ) : (
               <span className="text-xs text-wine/40">espera</span>
             )}
@@ -850,7 +872,17 @@ function Mesas({
   );
 }
 
-function Hotel({ plan, go, door }: { plan: PlanState; go: (s: PlanScreen) => void; door: "guest" | "couple" | "assessor" }) {
+function Hotel({
+  plan,
+  go,
+  door,
+  previewGuest,
+}: {
+  plan: PlanState;
+  go: (s: PlanScreen) => void;
+  door: "guest" | "couple" | "assessor";
+  previewGuest: () => void;
+}) {
   return (
     <div className="p-6">
       <p className="text-xs uppercase tracking-[0.2em] text-wine/50">Hotel</p>
@@ -875,7 +907,7 @@ function Hotel({ plan, go, door }: { plan: PlanState; go: (s: PlanScreen) => voi
       ))}
       <button
         type="button"
-        onClick={() => go(door === "guest" ? "convidado" : "convidado")}
+        onClick={() => (door === "guest" ? go("convidado") : door === "couple" ? previewGuest() : go("mais"))}
         className="mt-6 rounded-full bg-[#c4a574] px-6 py-3 font-semibold text-[#2a1c18]"
       >
         {door === "guest" ? "Voltar ao convite" : "Ver no site dele"}
@@ -1177,10 +1209,12 @@ function Endereco({
   plan,
   persist,
   flash,
+  go,
 }: {
   plan: PlanState;
   persist: (p: PlanState) => void;
   flash: (m: string) => void;
+  go: (s: PlanScreen) => void;
 }) {
   const [name, setName] = useState("");
   const [addr, setAddr] = useState("");
@@ -1228,7 +1262,10 @@ function Endereco({
       >
         Enviar endereço
       </button>
-      <p className="mt-6 text-sm text-wine/60">Manda este ecrã no grupo da família. Cada um escreve o próprio nome.</p>
+      <p className="mt-6 text-sm text-wine/60">Manda esta tela no grupo da família. Cada um escreve o próprio nome.</p>
+      <button type="button" onClick={() => go("gente")} className="mt-4 text-sm font-semibold text-wine underline">
+        Voltar à gente
+      </button>
     </div>
   );
 }
