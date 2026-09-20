@@ -27,6 +27,10 @@ import {
   type Rite,
 } from "@/lib/planning";
 
+function fieldCls(bad: boolean, extra = "") {
+  return `mt-1 w-full rounded-xl border px-4 py-3 ${bad ? "border-wine ring-2 ring-wine/30" : "border-wine/15"} ${extra}`;
+}
+
 const TABS: { id: PlanScreen; label: string }[] = [
   { id: "hoje", label: "Hoje" },
   { id: "site", label: "Site" },
@@ -157,11 +161,12 @@ export function PlanningApp({
       className={variant === "playground" && screen === "rua" ? "" : "min-h-screen bg-cream"}
     >
       {toast ? (
-        <div className="fixed left-1/2 top-4 z-50 max-w-md -translate-x-1/2 rounded-xl bg-wine px-4 py-3 text-sm text-white shadow-lg">
+        <div className="nc-toast fixed left-1/2 top-4 z-50 max-w-md -translate-x-1/2 rounded-xl bg-wine px-4 py-3 text-sm text-white shadow-lg">
           {toast}
         </div>
       ) : null}
 
+      <div key={screen} className="nc-in">
       {screen === "rua" && (
         <Rua
           startCouple={() => {
@@ -275,6 +280,7 @@ export function PlanningApp({
           </div>
         </div>
       )}
+      </div>
 
       {showChrome ? (
         <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-wine/10 bg-white md:hidden">
@@ -354,13 +360,54 @@ function Criar({
   go: (s: PlanScreen) => void;
 }) {
   const step = plan.step;
+  const [err, setErr] = useState("");
+  const [bad, setBad] = useState<string[]>([]);
+  const [shake, setShake] = useState(0);
+  const fail = (fields: string[], message: string) => {
+    setBad(fields);
+    setErr(message);
+    setShake((n) => n + 1);
+  };
   const next = () => {
+    if (step === 0) {
+      const miss = [!plan.p1.trim() && "p1", !plan.p2.trim() && "p2"].filter(Boolean) as string[];
+      if (miss.length) {
+        fail(miss, "Os dois nomes. Sem isso o convite não nasce.");
+        return;
+      }
+    }
+    if (step === 1) {
+      const miss = [!plan.date && "date", !plan.city.trim() && "city"].filter(Boolean) as string[];
+      if (miss.length) {
+        fail(miss, "Data e cidade. Os dois.");
+        return;
+      }
+    }
+    if (step === 2) {
+      const miss = [
+        (!plan.guestsTarget || plan.guestsTarget < 1) && "guests",
+        (!plan.budget || plan.budget < 1) && "budget",
+      ].filter(Boolean) as string[];
+      if (miss.length) {
+        fail(miss, "Quantos e quanto. Os dois.");
+        return;
+      }
+    }
+    setBad([]);
+    setErr("");
     if (step < 3) persist({ ...plan, step: step + 1 });
     else go("hoje");
   };
   const back = () => {
+    setBad([]);
+    setErr("");
     if (step > 0) persist({ ...plan, step: step - 1 });
     else go("rua");
+  };
+  const patch = (partial: Partial<PlanState>, field: string) => {
+    setBad((prev) => prev.filter((x) => x !== field));
+    if (err) setErr("");
+    persist({ ...plan, ...partial });
   };
   return (
     <div className="mx-auto max-w-md px-4 py-12">
@@ -370,13 +417,26 @@ function Criar({
           <i key={i} className={`h-1 flex-1 rounded-full ${i <= step ? "bg-wine" : "bg-wine/15"}`} />
         ))}
       </div>
+      <div key={`${step}-${shake}`} className={err ? "nc-shake" : "nc-in"}>
       {step === 0 && (
         <>
           <h1 className="mt-8 font-serif text-4xl italic text-wine">Como vocês se chamam?</h1>
           <label className="mt-6 block text-xs uppercase tracking-wide text-wine/50">Noiva</label>
-          <input className="mt-1 w-full rounded-xl border border-wine/15 px-4 py-3" placeholder="Nome dela" value={plan.p1} onChange={(e) => persist({ ...plan, p1: e.target.value })} />
+          <input
+            className={fieldCls(bad.includes("p1"))}
+            placeholder="Nome dela"
+            value={plan.p1}
+            aria-invalid={bad.includes("p1")}
+            onChange={(e) => patch({ p1: e.target.value }, "p1")}
+          />
           <label className="mt-4 block text-xs uppercase tracking-wide text-wine/50">Noivo</label>
-          <input className="mt-1 w-full rounded-xl border border-wine/15 px-4 py-3" placeholder="Nome dele" value={plan.p2} onChange={(e) => persist({ ...plan, p2: e.target.value })} />
+          <input
+            className={fieldCls(bad.includes("p2"))}
+            placeholder="Nome dele"
+            value={plan.p2}
+            aria-invalid={bad.includes("p2")}
+            onChange={(e) => patch({ p2: e.target.value }, "p2")}
+          />
           <p className="mt-3 text-sm text-wine/50">O parceiro entra agora.</p>
         </>
       )}
@@ -384,12 +444,19 @@ function Criar({
         <>
           <h1 className="mt-8 font-serif text-4xl italic text-wine">Quando, onde, qual rito?</h1>
           <label className="mt-6 block text-xs uppercase tracking-wide text-wine/50">Data</label>
-          <input type="date" className="mt-1 w-full rounded-xl border border-wine/15 px-4 py-3" value={plan.date} onChange={(e) => persist({ ...plan, date: e.target.value })} />
+          <input
+            type="date"
+            className={fieldCls(bad.includes("date"))}
+            value={plan.date}
+            aria-invalid={bad.includes("date")}
+            onChange={(e) => patch({ date: e.target.value }, "date")}
+          />
           <label className="mt-4 block text-xs uppercase tracking-wide text-wine/50">Cidade</label>
           <input
-            className="mt-1 w-full rounded-xl border border-wine/15 px-4 py-3"
+            className={fieldCls(bad.includes("city"))}
             value={plan.city}
-            onChange={(e) => persist({ ...plan, city: e.target.value, perHead: estimatePerHead(e.target.value) })}
+            aria-invalid={bad.includes("city")}
+            onChange={(e) => patch({ city: e.target.value, perHead: estimatePerHead(e.target.value) }, "city")}
           />
           <label className="mt-4 block text-xs uppercase tracking-wide text-wine/50">Rito</label>
           <select
@@ -414,9 +481,23 @@ function Criar({
         <>
           <h1 className="mt-8 font-serif text-4xl italic text-wine">Quantos. Quanto.</h1>
           <label className="mt-6 block text-xs uppercase tracking-wide text-wine/50">Convidados</label>
-          <input type="number" className="mt-1 w-full rounded-xl border border-wine/15 px-4 py-3" value={plan.guestsTarget} onChange={(e) => persist({ ...plan, guestsTarget: Number(e.target.value) })} />
+          <input
+            type="number"
+            min={1}
+            className={fieldCls(bad.includes("guests"))}
+            value={plan.guestsTarget || ""}
+            aria-invalid={bad.includes("guests")}
+            onChange={(e) => patch({ guestsTarget: Number(e.target.value) }, "guests")}
+          />
           <label className="mt-4 block text-xs uppercase tracking-wide text-wine/50">Teto</label>
-          <input type="number" className="mt-1 w-full rounded-xl border border-wine/15 px-4 py-3" value={plan.budget} onChange={(e) => persist({ ...plan, budget: Number(e.target.value) })} />
+          <input
+            type="number"
+            min={1}
+            className={fieldCls(bad.includes("budget"))}
+            value={plan.budget || ""}
+            aria-invalid={bad.includes("budget")}
+            onChange={(e) => patch({ budget: Number(e.target.value) }, "budget")}
+          />
           <p className="mt-3 text-sm text-wine/50">
             Buffet estimado nesta terra: {plan.guestsTarget} × {money(plan.perHead)} = {money(plan.guestsTarget * plan.perHead)}.
           </p>
@@ -441,6 +522,12 @@ function Criar({
           </div>
         </>
       )}
+      {err ? (
+        <p className="mt-4 text-sm font-semibold text-wine" role="alert" aria-live="polite">
+          {err}
+        </p>
+      ) : null}
+      </div>
       <button type="button" onClick={next} className="mt-8 w-full rounded-full bg-[#c4a574] py-4 font-semibold text-[#2a1c18]">
         {step === 3 ? "Abrir o Hoje" : "Continuar"}
       </button>
@@ -1054,6 +1141,7 @@ function Roteiro() {
 
 function Caderno({ plan, persist }: { plan: PlanState; persist: (p: PlanState) => void }) {
   const [text, setText] = useState("");
+  const [err, setErr] = useState("");
   return (
     <div className="p-6">
       <p className="text-xs uppercase tracking-[0.2em] text-wine/50">Caderno</p>
@@ -1064,13 +1152,32 @@ function Caderno({ plan, persist }: { plan: PlanState; persist: (p: PlanState) =
           <p className="mt-1 text-wine">{n.text}</p>
         </div>
       ))}
-      <textarea className="mt-4 w-full max-w-lg rounded-xl border border-wine/15 p-3" rows={3} value={text} onChange={(e) => setText(e.target.value)} placeholder="Um recado" />
+      <textarea
+        className={`${fieldCls(Boolean(err), "max-w-lg p-3")} mt-4`}
+        rows={3}
+        value={text}
+        aria-invalid={Boolean(err)}
+        onChange={(e) => {
+          setText(e.target.value);
+          if (err) setErr("");
+        }}
+        placeholder="Um recado"
+      />
+      {err ? (
+        <p className="mt-2 text-sm font-semibold text-wine" role="alert">
+          {err}
+        </p>
+      ) : null}
       <button
         type="button"
         onClick={() => {
-          if (!text.trim()) return;
+          if (!text.trim()) {
+            setErr("Escreve um recado.");
+            return;
+          }
           persist({ ...plan, notes: [...plan.notes, { who: plan.p1 || "Vocês", text: text.trim() }] });
           setText("");
+          setErr("");
         }}
         className="mt-3 rounded-full bg-wine px-5 py-2 text-sm font-semibold text-white"
       >
@@ -1156,7 +1263,11 @@ function Rsvp({
   const [events, setEvents] = useState<string[]>(["igreja", "festa"]);
   const [meal, setMeal] = useState("carne");
   const [plusOne, setPlusOne] = useState("");
-  const toggle = (e: string) => setEvents((prev) => (prev.includes(e) ? prev.filter((x) => x !== e) : [...prev, e]));
+  const [err, setErr] = useState("");
+  const toggle = (e: string) => {
+    setErr("");
+    setEvents((prev) => (prev.includes(e) ? prev.filter((x) => x !== e) : [...prev, e]));
+  };
   return (
     <div className="p-6">
       <p className="text-xs uppercase tracking-[0.2em] text-wine/50">RSVP · {namesOf(plan)}</p>
@@ -1180,9 +1291,18 @@ function Rsvp({
         onChange={(e) => setPlusOne(e.target.value)}
         placeholder="Nome do acompanhante, ou vazio"
       />
+      {err ? (
+        <p className="mt-4 text-sm font-semibold text-wine" role="alert">
+          {err}
+        </p>
+      ) : null}
       <button
         type="button"
         onClick={() => {
+          if (!events.length) {
+            setErr("Marca ao menos um momento.");
+            return;
+          }
           if (joao?.status === "confirmed") {
             flash("Já está na lista.");
             go("convidado");
@@ -1218,19 +1338,49 @@ function Endereco({
 }) {
   const [name, setName] = useState("");
   const [addr, setAddr] = useState("");
+  const [err, setErr] = useState("");
+  const [bad, setBad] = useState<string[]>([]);
   return (
     <div className="p-6">
       <p className="text-xs uppercase tracking-[0.2em] text-wine/50">Link de endereço</p>
       <h1 className="mt-2 font-serif text-4xl italic text-wine">A família preenche. A lista cresce.</h1>
       <label className="mt-6 block text-xs uppercase tracking-wide text-wine/50">Nome</label>
-      <input className="mt-1 w-full max-w-md rounded-xl border border-wine/15 px-4 py-3" value={name} onChange={(e) => setName(e.target.value)} placeholder="Quem está escrevendo" />
+      <input
+        className={fieldCls(bad.includes("name"), "max-w-md")}
+        value={name}
+        aria-invalid={bad.includes("name")}
+        onChange={(e) => {
+          setName(e.target.value);
+          setBad((prev) => prev.filter((x) => x !== "name"));
+          if (err) setErr("");
+        }}
+        placeholder="Quem está escrevendo"
+      />
       <label className="mt-4 block text-xs uppercase tracking-wide text-wine/50">Endereço</label>
-      <input className="mt-1 w-full max-w-md rounded-xl border border-wine/15 px-4 py-3" value={addr} onChange={(e) => setAddr(e.target.value)} placeholder="Rua, número, bairro" />
+      <input
+        className={fieldCls(bad.includes("addr"), "max-w-md")}
+        value={addr}
+        aria-invalid={bad.includes("addr")}
+        onChange={(e) => {
+          setAddr(e.target.value);
+          setBad((prev) => prev.filter((x) => x !== "addr"));
+          if (err) setErr("");
+        }}
+        placeholder="Rua, número, bairro"
+      />
+      {err ? (
+        <p className="mt-3 text-sm font-semibold text-wine" role="alert">
+          {err}
+        </p>
+      ) : null}
       <button
         type="button"
         onClick={() => {
           const who = name.trim();
-          if (!who || !addr.trim()) {
+          const miss = [!who && "name", !addr.trim() && "addr"].filter(Boolean) as string[];
+          if (miss.length) {
+            setBad(miss);
+            setErr("Nome e rua. Os dois.");
             flash("Nome e rua. Os dois.");
             return;
           }
@@ -1257,6 +1407,8 @@ function Endereco({
           flash(`${who.split(" ")[0]} entrou na lista.`);
           setName("");
           setAddr("");
+          setErr("");
+          setBad([]);
         }}
         className="mt-6 rounded-full bg-[#c4a574] px-6 py-3 font-semibold text-[#2a1c18]"
       >

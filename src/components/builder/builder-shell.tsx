@@ -54,6 +54,22 @@ export function BuilderShell({
   const [overlay, setOverlay] = useState<"rsvp" | "gifts" | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [photoError, setPhotoError] = useState("");
+  const [nameErr, setNameErr] = useState("");
+
+  function needNames() {
+    if (!state.partner1.trim() || !state.partner2.trim()) {
+      setNameErr("Os dois nomes. Sem isso o convite não nasce.");
+      setStep(1);
+      return false;
+    }
+    if (!state.weddingDate) {
+      setNameErr("Falta a data.");
+      setStep(1);
+      return false;
+    }
+    setNameErr("");
+    return true;
+  }
 
   const example = !state.partner1 || !state.partner2;
   const tenant: Tenant = {
@@ -182,7 +198,10 @@ export function BuilderShell({
               <li key={s.n}>
                 <button
                   type="button"
-                  onClick={() => setStep(s.n)}
+                  onClick={() => {
+                    if (s.n > 1 && !needNames()) return;
+                    setStep(s.n);
+                  }}
                   className={`rounded-full px-3 py-1 ${
                     step === s.n ? "bg-[#2a1c18] text-[#f6efe6]" : "bg-white text-[#8a746c]"
                   }`}
@@ -193,6 +212,7 @@ export function BuilderShell({
             ))}
           </ol>
 
+          <div key={step} className="nc-in">
           {step === 1 && (
             <section className="space-y-4 rounded-2xl bg-white p-6">
               <h2 className="font-serif text-2xl italic">Vocês</h2>
@@ -200,24 +220,32 @@ export function BuilderShell({
                 Seu nome
                 <input
                   value={state.partner1}
+                  aria-invalid={!state.partner1.trim() && Boolean(nameErr)}
                   onChange={(e) => {
                     const partner1 = e.target.value;
                     const slug = slugify(`${partner1}-${state.partner2}`);
                     patch({ partner1, slug });
+                    if (nameErr) setNameErr("");
                   }}
-                  className="mt-1 w-full border border-[#e6d9cc] px-3 py-2"
+                  className={`mt-1 w-full border px-3 py-2 ${
+                    !state.partner1.trim() && nameErr ? "border-wine ring-2 ring-wine/30" : "border-[#e6d9cc]"
+                  }`}
                 />
               </label>
               <label className="block text-sm">
                 Nome do(a) parceiro(a)
                 <input
                   value={state.partner2}
+                  aria-invalid={!state.partner2.trim() && Boolean(nameErr)}
                   onChange={(e) => {
                     const partner2 = e.target.value;
                     const slug = slugify(`${state.partner1}-${partner2}`);
                     patch({ partner2, slug });
+                    if (nameErr) setNameErr("");
                   }}
-                  className="mt-1 w-full border border-[#e6d9cc] px-3 py-2"
+                  className={`mt-1 w-full border px-3 py-2 ${
+                    !state.partner2.trim() && nameErr ? "border-wine ring-2 ring-wine/30" : "border-[#e6d9cc]"
+                  }`}
                 />
               </label>
               <label className="block text-sm">
@@ -225,13 +253,27 @@ export function BuilderShell({
                 <input
                   type="date"
                   value={state.weddingDate}
-                  onChange={(e) => patch({ weddingDate: e.target.value })}
-                  className="mt-1 w-full border border-[#e6d9cc] px-3 py-2"
+                  aria-invalid={!state.weddingDate && Boolean(nameErr)}
+                  onChange={(e) => {
+                    patch({ weddingDate: e.target.value });
+                    if (nameErr) setNameErr("");
+                  }}
+                  className={`mt-1 w-full border px-3 py-2 ${
+                    !state.weddingDate && nameErr ? "border-wine ring-2 ring-wine/30" : "border-[#e6d9cc]"
+                  }`}
                 />
               </label>
+              {nameErr ? (
+                <p className="text-sm font-semibold text-wine" role="alert">
+                  {nameErr}
+                </p>
+              ) : null}
               <button
                 type="button"
-                onClick={() => setStep(2)}
+                onClick={() => {
+                  if (!needNames()) return;
+                  setStep(2);
+                }}
                 className="rounded-full bg-[#2a1c18] px-5 py-2 text-sm text-white"
               >
                 Continuar
@@ -451,6 +493,7 @@ export function BuilderShell({
               </button>
             </section>
           )}
+          </div>
         </div>
 
         <aside className="hidden justify-center lg:flex">{phone}</aside>

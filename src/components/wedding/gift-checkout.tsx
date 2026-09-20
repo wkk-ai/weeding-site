@@ -44,6 +44,14 @@ export function GiftCheckout({
 
   async function pay(e: React.FormEvent) {
     e.preventDefault();
+    if (!name.trim()) {
+      setError("Escreve teu nome.");
+      return;
+    }
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setError("Este e-mail não parece e-mail.");
+      return;
+    }
     setLoading(true);
     setError("");
 
@@ -131,13 +139,19 @@ export function GiftCheckout({
         {surcharge > 0 && ` + taxa cartão ${formatCurrency(surcharge)}`}
       </p>
 
-      <form onSubmit={pay} className="mt-8 space-y-4">
+      <form noValidate onSubmit={pay} className="mt-8 space-y-4">
         <input
           required
           placeholder="Seu nome"
           value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border border-wine/20 px-4 py-3"
+          aria-invalid={error.includes("nome")}
+          onChange={(e) => {
+            setName(e.target.value);
+            if (error) setError("");
+          }}
+          className={`w-full rounded-lg border px-4 py-3 ${
+            error.includes("nome") ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+          }`}
         />
         <input
           type="email"
@@ -171,7 +185,11 @@ export function GiftCheckout({
             Cartão (+{CARD_SURCHARGE_PERCENT}%)
           </label>
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error ? (
+          <p className="text-sm font-semibold text-wine" role="alert">
+            {error}
+          </p>
+        ) : null}
         <button
           type="submit"
           disabled={loading}

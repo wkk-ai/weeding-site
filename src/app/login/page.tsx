@@ -17,6 +17,10 @@ function LoginForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setError("E-mail e senha. Os dois.");
+      return;
+    }
     setLoading(true);
     setError("");
 
@@ -44,15 +48,21 @@ function LoginForm() {
           NossoCasamento
         </Link>
         <h1 className="text-center font-serif text-2xl font-bold text-wine">Entrar</h1>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <form noValidate onSubmit={handleSubmit} className="mt-8 space-y-4">
           <div>
             <label className="block text-sm font-medium text-wine/80">E-mail</label>
             <input
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none focus:ring-1 focus:ring-wine"
+              aria-invalid={!email.trim() && Boolean(error)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (error) setError("");
+              }}
+              className={`mt-1 w-full rounded-lg border px-4 py-3 focus:border-wine focus:outline-none focus:ring-1 focus:ring-wine ${
+                !email.trim() && error ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+              }`}
             />
           </div>
           <div>
@@ -61,11 +71,21 @@ function LoginForm() {
               type="password"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none focus:ring-1 focus:ring-wine"
+              aria-invalid={!password.trim() && Boolean(error)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (error) setError("");
+              }}
+              className={`mt-1 w-full rounded-lg border px-4 py-3 focus:border-wine focus:outline-none focus:ring-1 focus:ring-wine ${
+                !password.trim() && error ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+              }`}
             />
           </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error ? (
+            <p className="text-sm font-semibold text-wine" role="alert">
+              {error}
+            </p>
+          ) : null}
           <p className="text-right text-sm">
             <Link href="/login/recuperar" className="text-wine/70 underline">
               Esqueci a senha

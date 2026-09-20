@@ -30,6 +30,10 @@ export function PasswordGate({
         className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-lg"
         onSubmit={(e) => {
           e.preventDefault();
+          if (!value.trim()) {
+            setError("Escreve a senha.");
+            return;
+          }
           if (value.trim() === password) {
             sessionStorage.setItem(key, "1");
             setOk(true);
@@ -46,11 +50,21 @@ export function PasswordGate({
         <input
           type="password"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className="mt-6 w-full rounded-lg border border-wine/20 px-4 py-3"
+          aria-invalid={Boolean(error)}
+          onChange={(e) => {
+            setValue(e.target.value);
+            if (error) setError("");
+          }}
+          className={`mt-6 w-full rounded-lg border px-4 py-3 ${
+            error ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+          }`}
           placeholder="Senha"
         />
-        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+        {error ? (
+          <p className="mt-2 text-sm font-semibold text-wine" role="alert">
+            {error}
+          </p>
+        ) : null}
         <button
           type="submit"
           className="mt-4 w-full rounded-full bg-wine py-3 font-semibold text-white"

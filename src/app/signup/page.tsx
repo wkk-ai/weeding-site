@@ -40,13 +40,49 @@ export default function SignupPage() {
   function handleNamesChange(p1: string, p2: string) {
     setPartner1(p1);
     setPartner2(p2);
+    if (error) setError("");
     if (!slug || slug === slugify(`${partner1}-${partner2}`)) {
       setSlug(slugify(`${p1}-${p2}`));
     }
   }
 
+  function goAccount() {
+    if (!partner1.trim() || !partner2.trim()) {
+      setError("Os dois nomes. Sem isso o site não nasce.");
+      return;
+    }
+    if (!weddingDate) {
+      setError("Falta a data.");
+      return;
+    }
+    setError("");
+    setStep(2);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!partner1.trim() || !partner2.trim()) {
+      setError("Os dois nomes. Sem isso o site não nasce.");
+      setStep(1);
+      return;
+    }
+    if (!weddingDate) {
+      setError("Falta a data.");
+      setStep(1);
+      return;
+    }
+    if (!slug.trim()) {
+      setError("Falta o endereço do site.");
+      return;
+    }
+    if (!email.trim() || !password.trim()) {
+      setError("E-mail e senha. Os dois.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Senha com pelo menos 6 letras.");
+      return;
+    }
     setLoading(true);
     setError("");
 
@@ -147,7 +183,7 @@ export default function SignupPage() {
           Grátis para começar · Publique em minutos
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <form noValidate onSubmit={handleSubmit} className="mt-8 space-y-4">
           {step === 1 && (
             <>
               <div>
@@ -155,8 +191,11 @@ export default function SignupPage() {
                 <input
                   required
                   value={partner1}
+                  aria-invalid={!partner1.trim() && error.includes("nomes")}
                   onChange={(e) => handleNamesChange(e.target.value, partner2)}
-                  className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none"
+                  className={`mt-1 w-full rounded-lg border px-4 py-3 focus:border-wine focus:outline-none ${
+                    !partner1.trim() && error.includes("nomes") ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+                  }`}
                   placeholder="Maria"
                 />
               </div>
@@ -165,8 +204,11 @@ export default function SignupPage() {
                 <input
                   required
                   value={partner2}
+                  aria-invalid={!partner2.trim() && error.includes("nomes")}
                   onChange={(e) => handleNamesChange(partner1, e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none"
+                  className={`mt-1 w-full rounded-lg border px-4 py-3 focus:border-wine focus:outline-none ${
+                    !partner2.trim() && error.includes("nomes") ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+                  }`}
                   placeholder="João"
                 />
               </div>
@@ -176,8 +218,14 @@ export default function SignupPage() {
                   type="date"
                   required
                   value={weddingDate}
-                  onChange={(e) => setWeddingDate(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none"
+                  aria-invalid={!weddingDate && error.includes("data")}
+                  onChange={(e) => {
+                    setWeddingDate(e.target.value);
+                    if (error) setError("");
+                  }}
+                  className={`mt-1 w-full rounded-lg border px-4 py-3 focus:border-wine focus:outline-none ${
+                    !weddingDate && error.includes("data") ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+                  }`}
                 />
               </div>
               <div>
@@ -214,11 +262,15 @@ export default function SignupPage() {
                   ))}
                 </div>
               </div>
+              {error && step === 1 ? (
+                <p className="text-sm font-semibold text-wine" role="alert">
+                  {error}
+                </p>
+              ) : null}
               <button
                 type="button"
-                onClick={() => setStep(2)}
-                disabled={!partner1 || !partner2 || !weddingDate}
-                className="w-full rounded-full bg-wine py-3 font-semibold text-white hover:bg-wine-light disabled:opacity-50"
+                onClick={goAccount}
+                className="w-full rounded-full bg-wine py-3 font-semibold text-white hover:bg-wine-light"
               >
                 Continuar
               </button>
@@ -261,7 +313,11 @@ export default function SignupPage() {
                   className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3 focus:border-wine focus:outline-none"
                 />
               </div>
-              {error && <p className="text-sm text-red-600">{error}</p>}
+              {error && step === 2 ? (
+                <p className="text-sm font-semibold text-wine" role="alert">
+                  {error}
+                </p>
+              ) : null}
               <div className="flex gap-3">
                 <button
                   type="button"

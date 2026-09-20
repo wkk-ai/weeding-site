@@ -164,14 +164,99 @@ body {
   transition: background-color 250ms ease, color 250ms ease;
 }
 
+@keyframes nc-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nc-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes nc-toast {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.nc-in {
+  animation: nc-in 280ms ease;
+}
+
+.nc-shake {
+  animation: nc-shake 320ms ease;
+}
+
+.nc-toast {
+  animation: nc-toast 280ms ease;
+}
+
+button,
+a,
+label.cursor-pointer {
+  -webkit-tap-highlight-color: rgba(92, 61, 74, 0.16);
+}
+
+button:not(:disabled),
+a.rounded-full,
+a.rounded-lg,
+label.cursor-pointer {
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+button:not(:disabled):active,
+a.rounded-full:active,
+a.rounded-lg:active,
+label.cursor-pointer:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover,
+  a.rounded-full:hover {
+    filter: brightness(1.04);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-hero-drift,
   .motion-card-in,
   .motion-reveal,
   .motion-tile-zoom,
   .motion-splash-in,
-  .motion-splash-out {
+  .motion-splash-out,
+  .nc-in,
+  .nc-shake,
+  .nc-toast {
     animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  button:not(:disabled),
+  a.rounded-full,
+  a.rounded-lg,
+  label.cursor-pointer {
     transition: none !important;
     transform: none !important;
   }

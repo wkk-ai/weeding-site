@@ -37,6 +37,22 @@ export function RsvpForm({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (!name.trim()) {
+      setError("Escreve teu nome.");
+      return;
+    }
+    if (plusOne && !plusOneName.trim()) {
+      setError("Quem vem com você?");
+      return;
+    }
+    if (status === "confirmed" && !events.length) {
+      setError("Marca ao menos um momento.");
+      return;
+    }
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setError("Este e-mail não parece e-mail.");
+      return;
+    }
     setLoading(true);
     setError("");
 
@@ -128,6 +144,7 @@ export function RsvpForm({
   return (
     <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-12">
       <form
+        noValidate
         onSubmit={submit}
         className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg"
       >
@@ -146,8 +163,14 @@ export function RsvpForm({
             <input
               required
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3"
+              aria-invalid={error.includes("nome")}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (error) setError("");
+              }}
+              className={`mt-1 w-full rounded-lg border px-4 py-3 ${
+                error.includes("nome") ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+              }`}
             />
           </div>
           <div>
@@ -198,8 +221,14 @@ export function RsvpForm({
                 <input
                   placeholder="Nome do acompanhante"
                   value={plusOneName}
-                  onChange={(e) => setPlusOneName(e.target.value)}
-                  className="w-full rounded-lg border border-wine/20 px-4 py-3"
+                  aria-invalid={error.includes("vem")}
+                  onChange={(e) => {
+                    setPlusOneName(e.target.value);
+                    if (error) setError("");
+                  }}
+                  className={`w-full rounded-lg border px-4 py-3 ${
+                    error.includes("vem") ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+                  }`}
                 />
               )}
               <div className="grid grid-cols-2 gap-3">
@@ -267,7 +296,11 @@ export function RsvpForm({
               className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3"
             />
           </div>
-            {error && <p className="text-sm text-red-600">Não deu certo. Tente de novo.</p>}
+            {error ? (
+              <p className="text-sm font-semibold text-wine" role="alert">
+                {error}
+              </p>
+            ) : null}
           <button
             type="submit"
             disabled={loading}

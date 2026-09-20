@@ -12,6 +12,10 @@ export default function RecuperarPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (!email.trim()) {
+      setError("Escreve teu e-mail.");
+      return;
+    }
     setError("");
     const supabase = createClient();
     const origin = window.location.origin;
@@ -38,16 +42,26 @@ export default function RecuperarPage() {
             Se o e-mail existir, você recebe um link para criar uma senha nova.
           </p>
         ) : (
-          <form onSubmit={submit} className="mt-8 space-y-4">
+          <form noValidate onSubmit={submit} className="mt-8 space-y-4">
             <input
               type="email"
               required
               placeholder="Seu e-mail"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-wine/20 px-4 py-3"
+              aria-invalid={!email.trim() && Boolean(error)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (error) setError("");
+              }}
+              className={`w-full rounded-lg border px-4 py-3 ${
+                error ? "border-wine ring-2 ring-wine/30" : "border-wine/20"
+              }`}
             />
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error ? (
+              <p className="text-sm font-semibold text-wine" role="alert">
+                {error}
+              </p>
+            ) : null}
             <button className="w-full rounded-full bg-wine py-3 font-semibold text-white">
               Enviar link
             </button>
