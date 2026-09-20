@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import { recordRsvp } from "@/lib/planning";
 
 export function RsvpForm({
   slug,
@@ -29,6 +30,7 @@ export function RsvpForm({
   const [plusOneName, setPlusOneName] = useState("");
   const [partySize, setPartySize] = useState(1);
   const [kids, setKids] = useState(0);
+  const [events, setEvents] = useState<string[]>(["igreja", "festa"]);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,6 +40,7 @@ export function RsvpForm({
     setLoading(true);
     setError("");
 
+    const eventNote = events.length ? `eventos:${events.join(",")}` : "";
     const payload = {
       slug,
       name,
@@ -45,12 +48,21 @@ export function RsvpForm({
       phone,
       rsvp_status: status,
       meal_choice: meal,
-      notes,
+      notes: [eventNote, notes].filter(Boolean).join("\n"),
       plus_one: plusOne,
       plus_one_name: plusOneName,
       party_size: partySize,
       kids,
     };
+
+    recordRsvp({
+      name,
+      meal,
+      events,
+      plusOne: plusOneName,
+      partySize,
+      declined: status === "declined",
+    });
 
     if (mode === "demo") {
       const prev = JSON.parse(localStorage.getItem("nc-demo-rsvp") ?? "[]");
@@ -209,6 +221,29 @@ export function RsvpForm({
                     onChange={(e) => setKids(Number(e.target.value))}
                     className="mt-1 w-full rounded-lg border border-wine/20 px-4 py-3"
                   />
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-wine/80">Quais momentos</label>
+                <div className="mt-2 space-y-2 text-sm">
+                  {[
+                    ["igreja", "Igreja"],
+                    ["festa", "Festa"],
+                    ["civil", "Civil"],
+                  ].map(([id, label]) => (
+                    <label key={id} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={events.includes(id)}
+                        onChange={() =>
+                          setEvents((prev) =>
+                            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+                          )
+                        }
+                      />
+                      {label}
+                    </label>
+                  ))}
                 </div>
               </div>
               <div>

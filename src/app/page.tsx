@@ -25,32 +25,32 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20" />
           <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-4xl flex-col items-center justify-end px-4 pb-20 text-center">
             <p className="text-xs uppercase tracking-[0.42em] text-[#c4a574]">
-              O site do casamento, em 5 minutos
+              O site, o relógio, a cadeira
             </p>
             <h1 className="mt-4 font-serif text-5xl italic leading-tight md:text-7xl">
               Vocês no centro da página.
             </h1>
             <p className="mt-6 max-w-xl text-lg font-light text-white/90">
-              Foto da noiva, foto do noivo, RSVP e PIX. Seus convidados abrem o link e já entendem o dia.
+              O primo abre o convite. Toda semana um zap. A assessora senta neste casamento — sem ver o PIX.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
-                href="/criar"
+                href="/planejar"
                 className="rounded-full bg-[#c4a574] px-8 py-4 font-semibold text-[#2a1c18]"
               >
-                Montar o site agora
+                Começar em 90 segundos
+              </Link>
+              <Link
+                href="/criar"
+                className="rounded-full border border-white/70 px-8 py-4 font-semibold text-white"
+              >
+                Só o site
               </Link>
               <Link
                 href="/demo"
                 className="rounded-full border border-white/70 px-8 py-4 font-semibold text-white"
               >
                 Abrir um casamento de verdade
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-full border border-white/70 px-8 py-4 font-semibold text-white"
-              >
-                Criar o nosso
               </Link>
             </div>
           </div>
@@ -72,13 +72,13 @@ export default function HomePage() {
         <section id="como-funciona" className="px-4 py-20">
           <div className="mx-auto max-w-5xl">
             <h2 className="text-center font-serif text-4xl italic text-wine">
-              Três passos. O site já parece de vocês.
+              Três faixas. Nessa ordem.
             </h2>
             <div className="mt-12 grid gap-8 md:grid-cols-3">
               {[
-                { n: "01", t: "Foto e nomes", d: "A capa, a noiva, o noivo. O convite já respira." },
-                { n: "02", t: "O dia", d: "Igreja, festa, padrinhos, o que vestir, o mapa." },
-                { n: "03", t: "O link", d: "WhatsApp, RSVP e PIX. Seus convidados fazem o resto." },
+                { n: "01", t: "O site", d: "O primo abre e já entende o dia. RSVP e PIX no mesmo link." },
+                { n: "02", t: "O relógio", d: "Toda semana, uma tarefa no WhatsApp. A lista nasce da data." },
+                { n: "03", t: "A cadeira", d: "A assessora senta neste casamento. Vê o RSVP. Não vê a chave." },
               ].map((s) => (
                 <div key={s.n} className="rounded-2xl bg-white p-8 shadow-sm">
                   <p className="text-xs tracking-[0.3em] text-wine/50">{s.n}</p>
@@ -88,8 +88,8 @@ export default function HomePage() {
               ))}
             </div>
             <div className="mt-10 text-center">
-              <Link href="/demo/rsvp" className="font-semibold text-wine underline">
-                Experimente confirmar presença na demo
+              <Link href="/planejar" className="font-semibold text-wine underline">
+                Andar a jornada no celular e na mesa
               </Link>
             </div>
           </div>

@@ -7,6 +7,7 @@ import { PublishButton } from "@/components/app/publish-button";
 import { SharePanel } from "@/components/app/share-panel";
 import { ExternalLink } from "lucide-react";
 import type { SiteContent } from "@/lib/types";
+import { AppHojeStrip } from "@/components/planning/app-hoje-strip";
 
 export default async function AppDashboardPage() {
   const supabase = await createClient();
@@ -56,7 +57,15 @@ export default async function AppDashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <AppHojeStrip
+        names={coupleDisplayName(tenant!.partner1_name, tenant!.partner2_name)}
+        city=""
+        confirmed={confirmedCount ?? 0}
+        guests={guestCount ?? 0}
+        funded={totalFunded}
+      />
+
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-wine">
             {coupleDisplayName(tenant!.partner1_name, tenant!.partner2_name)}

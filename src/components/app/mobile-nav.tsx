@@ -14,15 +14,16 @@ import {
 } from "lucide-react";
 
 const nav = [
-  { href: "/app", icon: LayoutDashboard, label: "Início" },
-  { href: "/app/editor", icon: Edit3, label: "Editor" },
-  { href: "/app/convidados", icon: Users, label: "Lista" },
-  { href: "/app/presentes", icon: Gift, label: "PIX" },
-  { href: "/app/financeiro", icon: Wallet, label: "Conta" },
+  { href: "/app", icon: LayoutDashboard, label: "Hoje" },
+  { href: "/app/editor", icon: Edit3, label: "Site" },
+  { href: "/app/convidados", icon: Users, label: "Gente" },
+  { href: "/app/presentes", icon: Gift, label: "Grana" },
+  { href: "/planejar", icon: Wallet, label: "Mais" },
 ];
 
 export const fullNav = [
   ...nav,
+  { href: "/app/financeiro", icon: Wallet, label: "Conta" },
   { href: "/app/dominio", icon: Globe, label: "Domínio" },
   { href: "/app/planos", icon: CreditCard, label: "Planos" },
   { href: "/app/arquivo", icon: Archive, label: "Arquivo" },
