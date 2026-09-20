@@ -3,269 +3,158 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NossoCasamento · mockup da casa</title>
+  <title>NossoCasamento · jornada celular e mesa</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --wine: #7a3e48;
-      --ink: #2a1c18;
-      --gold: #c4a574;
-      --cream: #f4ece4;
-      --paper: #fffdf8;
-      --mute: #6b5344;
+      --wine: #7a3e48; --ink: #2a1c18; --gold: #c4a574;
+      --cream: #f4ece4; --paper: #fffdf8; --mute: #6b5344;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body {
-      background: #1c1714;
-      color: var(--cream);
+      background: #1c1714; color: var(--cream);
       font-family: Outfit, system-ui, sans-serif;
-      display: grid;
-      grid-template-columns: 280px 1fr 260px;
-      min-height: 100svh;
+      display: grid; grid-template-columns: 250px 1fr 230px; min-height: 100svh;
     }
     a { color: inherit; text-decoration: none; }
     button, input, select { font: inherit; }
     button { cursor: pointer; border: 0; background: 0; color: inherit; }
-    aside { padding: 28px 22px; overflow: auto; }
-    .kicker {
-      letter-spacing: .26em;
-      text-transform: uppercase;
-      font-size: 11px;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-    h1 {
-      font-family: "Cormorant Garamond", serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 28px;
-      line-height: 1.15;
-      margin-bottom: 18px;
-    }
-    .map button, .notes li {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 10px 12px;
-      border-radius: 10px;
-      color: rgba(244,236,228,.72);
-      font-size: 14px;
-      font-weight: 300;
-    }
+    aside { padding: 24px 18px; overflow: auto; }
+    .kicker { letter-spacing: .26em; text-transform: uppercase; font-size: 11px; color: var(--gold); margin-bottom: 10px; }
+    h1 { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 400; font-size: 26px; line-height: 1.15; margin-bottom: 12px; }
+    .map button, .notes li { display: block; width: 100%; text-align: left; padding: 8px 10px; border-radius: 10px; color: rgba(244,236,228,.72); font-size: 13px; font-weight: 300; }
     .map button:hover { background: rgba(255,255,255,.05); color: #fff; }
     .map button.on { background: rgba(196,165,116,.18); color: #fff; }
-    .map .g {
-      margin: 16px 0 8px;
-      font-size: 11px;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: #8a746c;
+    .map .g { margin: 14px 0 6px; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #8a746c; }
+    .devswitch { display: flex; gap: 6px; margin: 0 0 16px; }
+    .devswitch button { flex: 1; border: 1px solid rgba(196,165,116,.4); border-radius: 999px; padding: 8px 0; font-size: 13px; }
+    .devswitch button.on { background: var(--gold); color: var(--ink); }
+    .stage { display: grid; place-items: center; padding: 16px 8px 24px; min-width: 0; }
+    .device {
+      background: var(--paper); color: var(--ink); overflow: hidden; position: relative;
+      display: flex; flex-direction: column; box-shadow: 0 40px 80px rgba(0,0,0,.45);
     }
-    .stage {
-      display: grid;
-      place-items: center;
-      padding: 24px 12px 32px;
-    }
-    .phone {
-      width: 390px;
-      height: 844px;
-      max-height: calc(100svh - 48px);
-      background: var(--paper);
-      color: var(--ink);
-      border-radius: 36px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 40px 80px rgba(0,0,0,.45);
-      display: flex;
-      flex-direction: column;
-    }
-    .phone.dark { background: #111; color: #fff; }
-    .notch {
-      height: 28px;
-      flex: 0 0 28px;
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      letter-spacing: .08em;
-      color: var(--mute);
-    }
-    .phone.dark .notch { color: rgba(255,255,255,.5); }
-    .scroll {
-      flex: 1;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .phone.dark .scroll { background: #111; }
-    .tabbar {
-      flex: 0 0 64px;
-      display: flex;
-      border-top: 1px solid rgba(122,62,72,.12);
-      background: #fff;
-    }
-    .tabbar button {
-      flex: 1;
-      font-size: 11px;
-      color: rgba(42,28,24,.45);
-      padding-top: 8px;
-    }
+    .device.phone { width: 390px; height: 844px; max-height: calc(100svh - 40px); border-radius: 36px; }
+    .device.desk { width: min(980px, calc(100vw - 500px)); height: min(670px, calc(100svh - 40px)); border-radius: 14px; }
+    .device.dark { background: #111; color: #fff; }
+    .notch { height: 28px; display: grid; place-items: center; font-size: 11px; color: var(--mute); }
+    .device.dark .notch { color: rgba(255,255,255,.5); }
+    .deskbar { display: none; height: 40px; background: #efe6dc; align-items: center; gap: 8px; padding: 0 14px; font-size: 12px; color: var(--mute); flex: 0 0 40px; }
+    .device.desk .deskbar { display: flex; }
+    .device.desk .notch { display: none; }
+    .dots i { width: 8px; height: 8px; border-radius: 50%; background: #c4b8ae; display: inline-block; margin-right: 5px; }
+    .url { background: #fff; border-radius: 8px; padding: 4px 10px; flex: 1; overflow: hidden; white-space: nowrap; }
+    .body { flex: 1; min-height: 0; display: flex; }
+    .rail { display: none; width: 176px; border-right: 1px solid #eadfd2; padding: 10px 8px; background: #fff; overflow: auto; }
+    .device.desk.couple .rail { display: block; }
+    .rail button { display: block; width: 100%; text-align: left; padding: 9px 10px; border-radius: 8px; font-size: 13px; color: var(--mute); }
+    .rail button.on { background: #f4ece4; color: var(--wine); font-weight: 500; }
+    .scroll { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; min-width: 0; }
+    .device.dark .scroll { background: #111; }
+    .tabbar { flex: 0 0 64px; display: flex; border-top: 1px solid rgba(122,62,72,.12); background: #fff; }
+    .tabbar button { flex: 1; font-size: 11px; color: rgba(42,28,24,.45); padding-top: 8px; }
     .tabbar button.on { color: var(--wine); font-weight: 500; }
     .tabbar b { display: block; font-size: 16px; font-weight: 400; margin-bottom: 2px; }
-    .hero {
-      position: relative;
-      min-height: 420px;
-      color: #fff;
-    }
-    .hero img, .cover img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-    }
-    .hero .shade {
-      position: absolute; inset: 0;
-      background: linear-gradient(transparent 20%, rgba(12,8,6,.88));
-    }
-    .hero .copy {
-      position: relative; z-index: 1;
-      padding: 240px 24px 28px;
-    }
-    .serif {
-      font-family: "Cormorant Garamond", serif;
-      font-style: italic;
-      font-weight: 400;
-    }
-    .gold { color: var(--gold); }
-    .wine { color: var(--wine); }
-    .mute { color: var(--mute); font-weight: 300; }
+    .device.desk .tabbar { display: none; }
+    .hero { position: relative; min-height: 420px; color: #fff; }
+    .device.desk .hero { min-height: 280px; }
+    .hero img, .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero .shade { position: absolute; inset: 0; background: linear-gradient(transparent 20%, rgba(12,8,6,.88)); }
+    .hero .copy { position: relative; z-index: 1; padding: 240px 24px 28px; }
+    .device.desk .hero .copy { padding: 80px 36px 28px; max-width: 560px; }
+    .serif { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 400; }
+    .gold { color: var(--gold); } .wine { color: var(--wine); } .mute { color: var(--mute); font-weight: 300; }
     .pad { padding: 20px 22px 28px; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--gold);
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 14px 22px;
-      font-weight: 500;
-      width: 100%;
-    }
-    .btn.ghost {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.55);
-      color: #fff;
-    }
+    .device.desk .pad { padding: 24px 28px 32px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--gold); color: var(--ink); border-radius: 999px; padding: 14px 22px; font-weight: 500; width: 100%; }
+    .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,.55); color: #fff; }
     .btn.wine { background: var(--wine); color: #fff; }
     .btn.slim { width: auto; padding: 10px 16px; font-size: 14px; }
-    .card {
-      background: #fff;
-      border: 1px solid #eadfD2;
-      border-radius: 16px;
-      padding: 16px;
-      margin-top: 12px;
-    }
+    .card { background: #fff; border: 1px solid #eadfd2; border-radius: 16px; padding: 16px; margin-top: 12px; }
     .statrow { display: flex; gap: 10px; }
     .statrow .card { flex: 1; text-align: center; margin-top: 0; }
     .statrow strong { display: block; font-size: 22px; }
     .flash { outline: 2px solid var(--gold); animation: pulse 1.2s ease 2; }
     @keyframes pulse { 50% { outline-color: var(--wine); } }
-    .toast {
-      position: absolute;
-      left: 16px; right: 16px; top: 36px;
-      background: var(--ink);
-      color: var(--cream);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 14px;
-      z-index: 5;
-    }
+    .toast { position: absolute; left: 16px; right: 16px; top: 44px; background: var(--ink); color: var(--cream); border-radius: 12px; padding: 12px 14px; font-size: 14px; z-index: 5; }
     .stepdot { display: flex; gap: 6px; margin: 8px 0 18px; }
     .stepdot i { width: 28px; height: 4px; border-radius: 99px; background: #eadfd2; }
     .stepdot i.on { background: var(--wine); }
     label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin: 14px 0 6px; }
-    input, select {
-      width: 100%;
-      border: 1px solid #eadfd2;
-      border-radius: 12px;
-      padding: 12px 14px;
-      background: #fff;
-      color: var(--ink);
-    }
+    input, select { width: 100%; border: 1px solid #eadfd2; border-radius: 12px; padding: 12px 14px; background: #fff; color: var(--ink); }
     .faces { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .faces button {
-      border-radius: 12px;
-      overflow: hidden;
-      height: 92px;
-      position: relative;
-      border: 2px solid transparent;
-    }
+    .faces button { border-radius: 12px; overflow: hidden; height: 92px; position: relative; border: 2px solid transparent; }
     .faces button.on { border-color: var(--gold); }
     .faces img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .faces span {
-      position: absolute; left: 8px; bottom: 6px; color: #fff; font-size: 12px;
-      text-shadow: 0 1px 4px #000;
-    }
-    .guest {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 0; border-bottom: 1px solid #eadfd2;
-    }
-    .pill {
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      border-radius: 99px;
-      padding: 4px 8px;
-      background: #eadfd2;
-    }
+    .faces span { position: absolute; left: 8px; bottom: 6px; color: #fff; font-size: 12px; text-shadow: 0 1px 4px #000; }
+    .guest { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eadfd2; }
+    .pill { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border-radius: 99px; padding: 4px 8px; background: #eadfd2; }
     .pill.yes { background: #dce8dc; color: #2d4a2d; }
     .pill.wait { background: #f3e6c8; color: #6a4e1f; }
     .task { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px dashed #eadfd2; }
-    .task i {
-      width: 22px; height: 22px; border-radius: 50%;
-      border: 1.5px solid var(--wine); flex: 0 0 22px; margin-top: 2px;
-    }
+    .task i { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--wine); flex: 0 0 22px; margin-top: 2px; }
     .task.done i { background: var(--wine); }
     .task.done p { text-decoration: line-through; color: var(--mute); }
-    .notes { font-size: 14px; font-weight: 300; color: rgba(244,236,228,.7); line-height: 1.55; }
-    .notes h2 {
-      font-family: "Cormorant Garamond", serif;
-      font-style: italic;
-      font-size: 22px;
-      color: #fff;
-      margin: 8px 0 10px;
-    }
-    .notes li { padding: 6px 0; list-style: none; }
+    .notes { font-size: 13px; font-weight: 300; color: rgba(244,236,228,.7); line-height: 1.55; }
+    .notes h2 { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 20px; color: #fff; margin: 8px 0 10px; }
+    .notes li { padding: 5px 0; list-style: none; }
     .band { padding: 22px; border-top: 1px solid #eadfd2; }
     .band h3 { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-    .warn {
-      background: #f8efe0;
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 14px;
-      margin-top: 12px;
-    }
+    .warn { background: #f8efe0; border-radius: 12px; padding: 12px 14px; font-size: 14px; margin-top: 12px; }
     .lock { font-size: 13px; color: var(--mute); margin-top: 10px; }
+    .bands3 { }
+    .device.desk .bands3 { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .only-desk { display: none; }
+    .device.desk .only-desk { display: block; }
+    .device.desk .only-phone { display: none; }
+    .device.desk .two { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: start; }
+    .months { display: none; }
+    .device.desk .months { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+    .month { background: #fff; border: 1px solid #eadfd2; border-radius: 12px; padding: 10px; font-size: 12px; }
+    .month strong { display: block; font-size: 13px; margin-bottom: 4px; }
+    .hall { display: none; }
+    .device.desk .hall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+    .table { aspect-ratio: 1; border: 2px dashed #c4a574; border-radius: 50%; display: grid; place-items: center; text-align: center; padding: 10px; font-size: 12px; background: #fffdf8; }
+    .table.rect { border-radius: 14px; }
+    .table.on { border-style: solid; background: #f4ece4; }
+    .chk { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #eadfd2; font-size: 15px; }
+    .chk b { width: 18px; height: 18px; border: 1.5px solid var(--wine); border-radius: 4px; flex: 0 0 18px; }
+    .chk.on b { background: var(--wine); }
+    .bubble { background: #dce8dc; border-radius: 16px 16px 4px 16px; padding: 12px 14px; margin-top: 12px; font-size: 14px; color: var(--ink); }
+    .quote { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eadfd2; font-size: 14px; }
     @media (max-width: 1100px) {
       body { grid-template-columns: 1fr; }
       aside:last-child { display: none; }
-      aside:first-child { padding-bottom: 8px; }
-      .stage { padding: 0 0 24px; }
+      .device.desk { width: calc(100vw - 24px); }
     }
   </style>
 </head>
 <body>
   <aside>
     <p class="kicker">Mockup · não é o site ainda</p>
-    <h1>Como o casal anda sem pensar.</h1>
-    <p style="font-size:13px;font-weight:300;color:rgba(244,236,228,.55);margin:0 0 16px;line-height:1.5">
-      <a href="concorrentes-casamento-infographic.png" target="_blank" style="color:#c4a574">Infográfico dos concorrentes</a>
+    <h1>Jornada nos dois aparelhos.</h1>
+    <div class="devswitch">
+      <button data-dev="phone" id="bphone">Celular</button>
+      <button data-dev="desk" id="bdesk">Mesa</button>
+    </div>
+    <p style="font-size:12px;font-weight:300;color:rgba(244,236,228,.5);margin:0 0 12px;line-height:1.45">
+      <a href="concorrentes-casamento-infographic.png" target="_blank" style="color:#c4a574">Infográfico</a>
+      · o melhor de Knot, Zola, Joy, Hitched, Bridebook, Bruiloft, Zexy, Appy, iCasei.
     </p>
     <div class="map" id="map"></div>
   </aside>
 
   <main class="stage">
-    <div class="phone" id="phone">
+    <div class="device phone" id="device">
       <div class="notch">9:41</div>
-      <div class="scroll" id="view"></div>
+      <div class="deskbar"><span class="dots"><i></i><i></i><i></i></span><span class="url" id="url">nossocasamento.com</span></div>
+      <div class="body">
+        <nav class="rail" id="rail"></nav>
+        <div class="scroll" id="view"></div>
+      </div>
       <nav class="tabbar" id="tabs" hidden></nav>
       <div class="toast" id="toast" hidden></div>
     </div>
@@ -276,23 +165,12 @@
   <script>
     const F = "../fotos/";
     const S = {
-      screen: "rua",
-      step: 0,
-      p1: "Marina",
-      p2: "Thiago",
-      date: "2027-08-14",
-      city: "São Paulo",
-      guests: 120,
-      budget: 180000,
-      rsvpYes: 42,
-      rsvpNo: 3,
-      rsvpWait: 75,
-      perHead: 280,
-      assessora: false,
-      face: "jardim",
-      toast: "",
-      flash: false,
-      primo: false,
+      screen: "rua", device: "phone", step: 0,
+      p1: "Marina", p2: "Thiago", date: "2027-08-14", city: "São Paulo",
+      guests: 120, budget: 180000, rsvpYes: 42, rsvpNo: 3, rsvpWait: 75,
+      perHead: 280, assessora: false, face: "jardim", rito: "os dois",
+      toast: "", flash: false, primo: false, seated: false, addr: false, meal: "carne",
+      evIgreja: true, evFesta: true, evCivil: false,
     };
 
     const MAP = [
@@ -300,60 +178,84 @@
       { id: "rua", t: "Home nova" },
       { id: "criar", t: "90 segundos" },
       { id: "convidado", t: "Site do primo" },
+      { id: "rsvp", t: "RSVP por evento" },
+      { id: "endereco", t: "Link de endereço" },
       { g: "Vocês" },
       { id: "hoje", t: "Hoje" },
       { id: "site", t: "Site" },
       { id: "gente", t: "Gente" },
       { id: "grana", t: "Grana" },
       { id: "tarefas", t: "Tarefas" },
-      { id: "mais", t: "Mais · equipe" },
-      { g: "Assessoria" },
+      { id: "mesas", t: "Mesas" },
+      { id: "hotel", t: "Hotel" },
+      { id: "papel", t: "Papel gêmeo" },
+      { g: "Mais / assessoria" },
+      { id: "mais", t: "Equipe" },
       { id: "assessora", t: "Cadeira dela" },
+      { id: "roteiro", t: "Dia D" },
+      { id: "caderno", t: "Caderno dos dois" },
+      { id: "zap", t: "Zap da semana" },
     ];
 
     const NOTES = {
-      rua: ["Três faixas, nessa ordem.", "Site do convidado.", "Relógio no e-mail.", "Cadeira da assessora.", "Preço só depois."],
-      criar: ["Bridebook: conversa, não formulário.", "Site nasce de brinde.", "Parceiro entra no dia 1."],
-      convidado: ["Uma pergunta. RSVP. PIX.", "Não vê o painel do casal."],
-      hoje: ["Uma frase. Um botão dourado.", "RSVP em número. Teto em reais.", "O resto some."],
-      site: ["O editor continua. Só não é a home."],
-      gente: ["Clique no primo. Número sobe.", "Buffet sobe junto. Joy, no PIX."],
-      grana: ["Teto pisca quando o RSVP muda.", "Assessora não entra aqui."],
-      tarefas: ["Data manda na lista.", "E-mail e WhatsApp da semana."],
-      mais: ["Convite da assessora.", "Ela cria tarefa. Não saca PIX."],
-      assessora: ["Mesmo casamento. Sem a chave.", "Roteiro do dia no mesmo papel."],
+      rua: ["Três faixas: site, relógio, cadeira.", "Mesa: as três na mesma linha.", "Preço depois."],
+      criar: ["Bridebook: conversa.", "Hitched: parceiro no dia 1.", "Rito muda a lista (Alemanha)."],
+      convidado: ["Joy: o convidado é o produto.", "Uma pergunta. Depois os eventos."],
+      rsvp: ["Joy + Appy: civil, igreja, festa.", "Comida e plus-one nomeado.", "Cada sim empurra o buffet."],
+      endereco: ["Joy Contact Collector.", "Um link. A família preenche.", "Mesa mostra o QR."],
+      hoje: ["The Knot: o que fazer neste mês.", "Celular = uma frase.", "Mesa = frase + quatro meses."],
+      site: ["Editor continua. Não é a porta."],
+      gente: ["Clique no primo. Número sobe.", "Mesa: ficha com comida e eventos."],
+      grana: ["Bridebook + iCasei: média da terra.", "Mesa: 3 orçamentos colados.", "PIX só o casal vê."],
+      tarefas: ["The Knot: pela data.", "Bruiloft: zap amanhã 9h.", "Mesa: meses em colunas."],
+      mesas: ["Hitched: arrasta na mesa.", "Celular: quem ainda está em pé.", "Lista sincroniza com RSVP."],
+      hotel: ["Joy: bloco sem cartão de vocês.", "O primo reserva sozinho."],
+      papel: ["Minted / Zola: papel = site.", "Mesa escolhe. Celular aprova."],
+      mais: ["Zexy: ela senta neste casamento.", "Não numa vitrine. Sem PIX."],
+      assessora: ["RSVP ao vivo. Roteiro.", "Bloqueado: chave e saque."],
+      roteiro: ["Appy + draaiboek holandês.", "Mesa: duas colunas.", "Zap da equipe no dia."],
+      caderno: ["Zexy Futari Note.", "Recado só dos dois."],
+      zap: ["Bruiloft: a tarefa grita.", "No BR, WhatsApp é o e-mail."],
     };
 
-    const COUPLE = new Set(["hoje","site","gente","grana","tarefas","mais"]);
+    const COUPLE = new Set(["hoje","site","gente","grana","tarefas","mesas","hotel","papel","mais","roteiro","caderno","zap"]);
+    const RAIL = [
+      ["hoje","Hoje"],["site","Site"],["gente","Gente"],["grana","Grana"],
+      ["tarefas","Tarefas"],["mesas","Mesas"],["mais","Equipe"],
+    ];
+    const URLS = {
+      rua: "nossocasamento.com", criar: "nossocasamento.com/criar",
+      convidado: "marinaethiago.com", rsvp: "marinaethiago.com/confirmar",
+      endereco: "marinaethiago.com/endereco", hoje: "nossocasamento.com/app",
+      site: "nossocasamento.com/app/site", gente: "nossocasamento.com/app/gente",
+      grana: "nossocasamento.com/app/grana", tarefas: "nossocasamento.com/app/tarefas",
+      mesas: "nossocasamento.com/app/mesas", hotel: "nossocasamento.com/app/hotel",
+      papel: "nossocasamento.com/app/papel", mais: "nossocasamento.com/app/equipe",
+      assessora: "nossocasamento.com/assessoria", roteiro: "nossocasamento.com/app/diad",
+      caderno: "nossocasamento.com/app/caderno", zap: "nossocasamento.com/app/tarefas",
+    };
 
-    function money(n) {
-      return "R$ " + n.toLocaleString("pt-BR");
-    }
-    function months() { return 11; }
-    function buffet() { return S.rsvpYes * S.perHead; }
-    function go(id) {
-      S.screen = id;
-      draw();
-    }
+    const money = (n) => "R$ " + n.toLocaleString("pt-BR");
+    const months = () => 11;
+    const buffet = () => S.rsvpYes * S.perHead;
+    function go(id) { S.screen = id; draw(); }
     function toast(msg) {
-      S.toast = msg;
-      draw();
+      S.toast = msg; draw();
       setTimeout(() => { S.toast = ""; draw(); }, 2600);
     }
     function confirmPrimo() {
-      if (S.rsvpWait <= 0) return;
-      S.rsvpYes += 1;
-      S.rsvpWait -= 1;
-      S.primo = true;
-      S.flash = true;
+      if (S.primo) {
+        if (S.screen === "rsvp") { toast("Já está na lista. Buffet já conta a cabeça."); go("gente"); }
+        else go("rsvp");
+        return;
+      }
+      S.rsvpYes += 1; S.rsvpWait -= 1; S.primo = true; S.flash = true;
       toast("Primo confirmou. Buffet +" + money(S.perHead) + ". Teto piscou.");
       setTimeout(() => { S.flash = false; draw(); }, 1800);
     }
-    function invite() {
-      S.assessora = true;
-      toast("Helena sentou neste casamento. Sem ver o PIX.");
-      go("assessora");
-    }
+    function invite() { S.assessora = true; toast("Helena sentou. Sem ver o PIX."); go("assessora"); }
+    function seat() { S.seated = true; toast("João na mesa 2. Hitched, no nosso salão."); }
+    function saveAddr() { S.addr = true; toast("Endereço da tia entrou. A lista cresceu sozinha."); }
 
     function mapHtml() {
       return MAP.map((x) => x.g
@@ -361,17 +263,17 @@
         : `<button class="${S.screen===x.id?"on":""}" data-go="${x.id}">${x.t}</button>`
       ).join("");
     }
-
     function tabsHtml() {
-      const items = [
-        ["hoje","Hoje","⌂"],
-        ["site","Site","◇"],
-        ["gente","Gente","☺"],
-        ["grana","Grana","R$"],
-        ["mais","Mais","…"],
-      ];
+      const items = [["hoje","Hoje","⌂"],["site","Site","◇"],["gente","Gente","☺"],["grana","Grana","R$"],["mais","Mais","…"]];
+      const mais = new Set(["mais","tarefas","mesas","hotel","papel","roteiro","caderno","zap"]);
       return items.map(([id,l,i]) =>
-        `<button class="${S.screen===id||(id==="mais"&&(S.screen==="tarefas"||S.screen==="mais"))?"on":""}" data-go="${id}"><b>${i}</b>${l}</button>`
+        `<button class="${S.screen===id||(id==="mais"&&mais.has(S.screen))?"on":""}" data-go="${id}"><b>${i}</b>${l}</button>`
+      ).join("");
+    }
+    function railHtml() {
+      const mais = new Set(["mais","hotel","papel","roteiro","caderno","zap"]);
+      return RAIL.map(([id,l]) =>
+        `<button class="${S.screen===id||(id==="mais"&&mais.has(S.screen))?"on":""}" data-go="${id}">${l}</button>`
       ).join("");
     }
 
@@ -388,121 +290,131 @@
             <button class="btn ghost" style="margin-top:8px" data-go="convidado">Abrir o site do convidado</button>
           </div>
         </div>
-        <div class="band">
-          <h3>01 · o site</h3>
-          <p class="serif" style="font-size:26px">O primo abre e já entende o dia.</p>
-        </div>
-        <div class="band">
-          <h3>02 · o relógio</h3>
-          <p class="serif" style="font-size:26px">Toda semana, uma tarefa no WhatsApp.</p>
-        </div>
-        <div class="band">
-          <h3>03 · a cadeira</h3>
-          <p class="serif" style="font-size:26px">A assessora senta no casamento. Não numa vitrine.</p>
-        </div>
-      `;
+        <div class="bands3">
+          <div class="band"><h3>01 · o site</h3><p class="serif" style="font-size:24px">O primo abre e já entende o dia.</p></div>
+          <div class="band"><h3>02 · o relógio</h3><p class="serif" style="font-size:24px">Toda semana, uma tarefa no WhatsApp.</p></div>
+          <div class="band"><h3>03 · a cadeira</h3><p class="serif" style="font-size:24px">A assessora senta no casamento.</p></div>
+        </div>`;
     }
 
     function criar() {
       const steps = [
-        {
-          t: "Como vocês se chamam?",
-          b: `
+        { t: "Como vocês se chamam?", b: `
             <label>Noiva</label><input id="p1" value="${S.p1}" />
             <label>Noivo</label><input id="p2" value="${S.p2}" />
-            <p class="lock">O parceiro entra agora. Hitched pede isso no cadastro.</p>
-          `
-        },
-        {
-          t: "Quando e onde?",
-          b: `
+            <p class="lock">O parceiro entra agora. Hitched pede isso no cadastro.</p>` },
+        { t: "Quando, onde, qual rito?", b: `
             <label>Data</label><input id="date" type="date" value="${S.date}" />
             <label>Cidade</label><input id="city" value="${S.city}" />
-          `
-        },
-        {
-          t: "Quantos. Quanto.",
-          b: `
+            <label>Rito</label>
+            <select id="rito">
+              <option ${S.rito==="civil"?"selected":""}>civil</option>
+              <option ${S.rito==="igreja"?"selected":""}>igreja</option>
+              <option ${S.rito==="os dois"?"selected":""}>os dois</option>
+            </select>
+            <p class="lock">A lista de documentos muda com o rito. Hochzeit.de já faz isso.</p>` },
+        { t: "Quantos. Quanto.", b: `
             <label>Convidados</label><input id="guests" type="number" value="${S.guests}" />
             <label>Teto</label><input id="budget" type="number" value="${S.budget}" />
-            <p class="lock">A lista nasce da data. Sem cadastro no meio.</p>
-          `
-        },
-        {
-          t: "Que cara tem o dia?",
-          b: `
+            <p class="lock">A lista nasce da data. Bridebook calcula a média da terra depois.</p>` },
+        { t: "Que cara tem o dia?", b: `
             <div class="faces">
               <button data-face="jardim" class="${S.face==="jardim"?"on":""}"><img src="${F}jardim.jpg" alt="" /><span>Jardim</span></button>
               <button data-face="noite" class="${S.face==="noite"?"on":""}"><img src="${F}altar.jpg" alt="" /><span>Noite</span></button>
               <button data-face="papel" class="${S.face==="papel"?"on":""}"><img src="${F}flores.jpg" alt="" /><span>Papel</span></button>
               <button data-face="costa" class="${S.face==="costa"?"on":""}"><img src="${F}beijo.jpg" alt="" /><span>Costa</span></button>
             </div>
-          `
-        },
+            <p class="lock">Easy Weddings: o quiz vende o visual. O site nasce de brinde.</p>` },
       ];
       const s = steps[S.step];
-      const last = S.step === 3;
       return `
-        <div class="pad">
-          <p class="kicker wine">Passo ${S.step+1} de 4</p>
+        <div class="pad" style="max-width:520px">
+          <p class="kicker wine">Passo ${S.step+1} de 4 · Bridebook</p>
           <div class="stepdot">${[0,1,2,3].map(i=>`<i class="${i<=S.step?"on":""}"></i>`).join("")}</div>
           <h2 class="serif" style="font-size:34px">${s.t}</h2>
           ${s.b}
-          <button class="btn" style="margin-top:22px" id="next">${last ? "Abrir o Hoje" : "Continuar"}</button>
-        </div>
-      `;
+          <button class="btn" style="margin-top:22px" id="next">${S.step===3 ? "Abrir o Hoje" : "Continuar"}</button>
+        </div>`;
     }
 
     function hoje() {
       return `
         <div class="pad">
-          <p class="kicker wine">${S.p1} & ${S.p2}</p>
-          <p class="mute">faltam ${months()} meses · ${S.city}</p>
-          <h2 class="serif" style="font-size:36px;margin:10px 0 8px">Fechem o espaço.</h2>
-          <p class="mute">Igreja e salão somem primeiro no calendário de São Paulo. Uma ação. O resto espera.</p>
-          <button class="btn" style="margin-top:18px" data-go="tarefas">Marcar como feito</button>
-          <div class="statrow" style="margin-top:18px">
-            <div class="card"><span class="mute">Disseram sim</span><strong>${S.rsvpYes}</strong></div>
-            <div class="card ${S.flash?"flash":""}"><span class="mute">Teto</span><strong>${money(S.budget)}</strong></div>
+          <div class="two">
+            <div>
+              <p class="kicker wine">${S.p1} & ${S.p2}</p>
+              <p class="mute">faltam ${months()} meses · ${S.city} · ${S.rito}</p>
+              <h2 class="serif" style="font-size:36px;margin:10px 0 8px">Fechem o espaço.</h2>
+              <p class="mute">Igreja e salão somem primeiro no calendário de São Paulo. Uma ação. The Knot chama de “este mês”.</p>
+              <button class="btn" style="margin-top:18px" data-go="tarefas">Marcar como feito</button>
+              <div class="statrow" style="margin-top:18px">
+                <div class="card"><span class="mute">Disseram sim</span><strong>${S.rsvpYes}</strong></div>
+                <div class="card ${S.flash?"flash":""}"><span class="mute">Teto</span><strong>${money(S.budget)}</strong></div>
+              </div>
+              <div class="warn">Buffet estimado: ${money(buffet())} · ${S.rsvpYes} × ${money(S.perHead)}</div>
+            </div>
+            <div class="only-desk">
+              <p class="kicker wine">Os próximos meses</p>
+              <div class="card"><strong>Set</strong><p class="mute">Fechar espaço. Zap amanhã 9h.</p></div>
+              <div class="card"><strong>Out</strong><p class="mute">Três orçamentos de buffet.</p></div>
+              <div class="card"><strong>Nov</strong><p class="mute">Mandar o link de endereço.</p></div>
+              <div class="card"><strong>Dez</strong><p class="mute">Papel da mesma cara do site.</p></div>
+            </div>
           </div>
-          <div class="warn">Buffet estimado hoje: ${money(buffet())} · ${S.rsvpYes} × ${money(S.perHead)}</div>
-        </div>
-      `;
+        </div>`;
     }
 
     function site() {
+      const img = S.face==="noite"?"altar.jpg":S.face==="papel"?"flores.jpg":S.face==="costa"?"beijo.jpg":"jardim.jpg";
       return `
-        <div class="cover" style="position:relative;height:280px;color:#fff">
-          <img src="${F}${S.face==="noite"?"altar.jpg":S.face==="papel"?"flores.jpg":S.face==="costa"?"beijo.jpg":"jardim.jpg"}" alt="" />
+        <div class="cover" style="position:relative;height:240px;color:#fff">
+          <img src="${F}${img}" alt="" />
           <div class="shade" style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,.7))"></div>
-          <div style="position:relative;padding:170px 22px 20px">
-            <p class="kicker gold">O site</p>
+          <div style="position:relative;padding:140px 22px 20px">
+            <p class="kicker gold">O site · modelo ${S.face}</p>
             <h2 class="serif" style="font-size:36px">${S.p1} & ${S.p2}</h2>
           </div>
         </div>
         <div class="pad">
-          <p class="mute">Modelo ${S.face}. O editor continua aqui. Não é mais a porta da frente.</p>
+          <p class="mute">O editor continua. Não é mais a porta da frente. Zola trata o site como convite, não como dashboard.</p>
           <button class="btn slim" style="margin-top:14px" data-go="convidado">Ver como o primo vê</button>
-        </div>
-      `;
+          <button class="btn slim" style="margin-top:8px;background:#eadfd2" data-go="papel">Papel da mesma cara</button>
+        </div>`;
     }
 
     function gente() {
       return `
         <div class="pad">
-          <p class="kicker wine">Gente</p>
-          <h2 class="serif" style="font-size:32px">${S.rsvpYes} sim · ${S.rsvpWait} calados</h2>
-          <p class="mute">Quando o primo confirma, o buffet sobe sozinho.</p>
-          <div class="guest"><span>Helena Costa</span><span class="pill yes">sim</span></div>
-          <div class="guest"><span>Rafael Lima</span><span class="pill wait">espera</span></div>
-          <div class="guest">
-            <span>Primo João</span>
-            ${S.primo ? `<span class="pill yes">sim</span>` : `<button class="btn slim" id="primo">Ele confirmou</button>`}
+          <div class="two">
+            <div>
+              <p class="kicker wine">Gente</p>
+              <h2 class="serif" style="font-size:32px">${S.rsvpYes} sim · ${S.rsvpWait} calados</h2>
+              <p class="mute">Quando o primo confirma, o buffet sobe. Joy no PIX.</p>
+              <div class="guest"><span>Helena Costa</span><span class="pill yes">sim · igreja+festa</span></div>
+              <div class="guest"><span>Rafael Lima</span><span class="pill wait">espera</span></div>
+              <div class="guest">
+                <span>Primo João</span>
+                ${S.primo ? `<span class="pill yes">sim · ${S.meal}</span>` : `<button class="btn slim" id="primo">Ele confirmou</button>`}
+              </div>
+              <div class="guest"><span>Tia Lúcia</span><span class="pill yes">${S.addr ? "sim · endereço ok" : "sim + 2"}</span></div>
+              <button class="btn" style="margin-top:14px" data-go="endereco">Mandar o link de endereço</button>
+              <p class="only-phone lock">Planilha e CSV: abra na mesa.</p>
+            </div>
+            <div class="only-desk">
+              <p class="kicker wine">Ficha · Primo João</p>
+              <div class="card">
+                <p class="mute">Eventos</p>
+                <p>Igreja sim · Festa sim · Civil não</p>
+                <p class="mute" style="margin-top:8px">Comida</p>
+                <p>${S.primo ? S.meal : "ainda não respondeu"}</p>
+                <p class="mute" style="margin-top:8px">Mesa</p>
+                <p>${S.seated ? "Mesa 2, cadeira 4" : "em pé"}</p>
+                <button class="btn slim" style="margin-top:12px" data-go="mesas">Sentar no salão</button>
+              </div>
+              <p class="lock">Mesa importa CSV. Celular só confirma. The Knot + Joy.</p>
+            </div>
           </div>
-          <div class="guest"><span>Tia Lúcia</span><span class="pill yes">sim + 2</span></div>
-          <div class="warn">Cada sim puxa ${money(S.perHead)} no teto. Joy faz isso. Vocês já têm o RSVP — falta empurrar a grana.</div>
-        </div>
-      `;
+        </div>`;
     }
 
     function grana() {
@@ -510,25 +422,31 @@
       const pct = Math.min(100, Math.round(used / S.budget * 100));
       return `
         <div class="pad">
-          <p class="kicker wine">Grana</p>
-          <h2 class="serif" style="font-size:32px">${money(S.budget)}</h2>
-          <p class="mute">Teto de vocês. ${pct}% já no papel, contando quem disse sim.</p>
-          <div class="card ${S.flash?"flash":""}">
-            <p class="mute">Buffet · ${S.rsvpYes} confirmações</p>
-            <strong style="font-size:24px">${money(buffet())}</strong>
+          <div class="two">
+            <div>
+              <p class="kicker wine">Grana</p>
+              <h2 class="serif" style="font-size:32px">${money(S.budget)}</h2>
+              <p class="mute">${pct}% já no papel. Média SP 2026 · Santander / iCasei.</p>
+              <div class="card ${S.flash?"flash":""}">
+                <p class="mute">Buffet · ${S.rsvpYes} confirmações × ${money(S.perHead)}</p>
+                <strong style="font-size:24px">${money(buffet())}</strong>
+              </div>
+              <div class="card"><p class="mute">Igreja + papel + foto</p><strong>R$ 42.000</strong></div>
+              <div class="card"><p class="mute">PIX recebido · Zola, no Brasil</p><strong>R$ 3.480</strong>
+                <p class="lock">A assessora não vê esta linha.</p>
+              </div>
+            </div>
+            <div class="only-desk">
+              <p class="kicker wine">Três orçamentos · buffet</p>
+              <div class="card">
+                <div class="quote"><span>Casa Vila</span><span>R$ 268 / pessoa</span></div>
+                <div class="quote"><span>Jardim Europa</span><span>R$ 310 / pessoa</span></div>
+                <div class="quote"><span>Salão da tia</span><span>R$ 190 / pessoa</span></div>
+                <p class="lock">Cola o nome. Sem vitrine de 70 mil. Bridebook dá a média; vocês escolhem.</p>
+              </div>
+            </div>
           </div>
-          <div class="card">
-            <p class="mute">Igreja + papel + foto (faixa 2026)</p>
-            <strong>R$ 42.000</strong>
-          </div>
-          <div class="card">
-            <p class="mute">PIX recebido</p>
-            <strong>R$ 3.480</strong>
-            <p class="lock">A assessora não vê esta linha.</p>
-          </div>
-          <button class="btn" style="margin-top:16px" data-go="gente">Ver quem falta</button>
-        </div>
-      `;
+        </div>`;
     }
 
     function tarefas() {
@@ -536,12 +454,61 @@
         <div class="pad">
           <p class="kicker wine">Setembro 2026 · faltam ${months()} meses</p>
           <h2 class="serif" style="font-size:32px">Esta semana</h2>
-          <div class="task"><i></i><div><strong>Fechar o espaço</strong><p class="mute">WhatsApp amanhã, 9h. Bruiloft.nl já faz isso.</p></div></div>
-          <div class="task"><i></i><div><strong>Pedir três orçamentos de buffet</strong><p class="mute">Cola o nome. Sem vitrine de 70 mil.</p></div></div>
+          <div class="task"><i></i><div><strong>Fechar o espaço</strong><p class="mute">WhatsApp amanhã, 9h. Bruiloft.nl.</p></div></div>
+          <div class="task"><i></i><div><strong>Pedir três orçamentos de buffet</strong><p class="mute">Cola o nome. Sem classificado.</p></div></div>
+          <div class="task"><i></i><div><strong>Documentos do ${S.rito}</strong><p class="mute">A lista muda com o rito. Hochzeit.de.</p></div></div>
           <div class="task done"><i></i><div><p>Escolher a cara do site</p></div></div>
-          <p class="lock" style="margin-top:16px">Tarefa sem mês some. Data manda.</p>
-        </div>
-      `;
+          <button class="btn" style="margin-top:16px" data-go="zap">Ver o zap que sai amanhã</button>
+          <div class="months">
+            <div class="month"><strong>Set</strong>Espaço</div>
+            <div class="month"><strong>Out</strong>Buffet</div>
+            <div class="month"><strong>Nov</strong>Endereços</div>
+            <div class="month"><strong>Dez</strong>Papel</div>
+          </div>
+        </div>`;
+    }
+
+    function mesas() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Mesas · Hitched</p>
+          <h2 class="serif" style="font-size:32px">${S.seated ? "João sentou." : "Quem ainda está em pé."}</h2>
+          <p class="only-phone mute">No celular: a fila. Arrastar o salão pede a mesa.</p>
+          <div class="guest"><span>Primo João</span>${S.seated ? `<span class="pill yes">mesa 2</span>` : `<button class="btn slim" id="seat">Sentar na 2</button>`}</div>
+          <div class="guest"><span>Helena Costa</span><span class="pill yes">mesa 1</span></div>
+          <div class="guest"><span>Tia Lúcia + 2</span><span class="pill yes">mesa 1</span></div>
+          <div class="hall">
+            <div class="table on">Mesa 1<br>Helena, Lúcia</div>
+            <div class="table ${S.seated?"on":""}">Mesa 2<br>${S.seated?"João":"vazia"}</div>
+            <div class="table rect">Mesa 3<br>padrinhos</div>
+            <div class="table">Mesa 4<br>—</div>
+          </div>
+        </div>`;
+    }
+
+    function hotel() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Hotel · Joy</p>
+          <h2 class="serif" style="font-size:32px">Bloco sem o cartão de vocês.</h2>
+          <p class="mute">O primo reserva. Vocês só indicam. Sem crédito no nome do casal.</p>
+          <div class="card"><strong>Hotel Fasano, Jardins</strong><p class="mute">R$ 890 a diária · 12 quartos</p><button class="btn slim" style="margin-top:10px" data-go="convidado">Ver no site dele</button></div>
+          <div class="card"><strong>Ibis Budget Paulista</strong><p class="mute">R$ 280 a diária · 20 quartos</p></div>
+        </div>`;
+    }
+
+    function papel() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Papel · Minted / Zola</p>
+          <h2 class="serif" style="font-size:32px">O envelope parece o site.</h2>
+          <p class="mute">Modelo ${S.face}. Mesma cara. Upsell depois do sentimento.</p>
+          <div class="faces">
+            <button class="on"><img src="${F}flores.jpg" alt="" /><span>Convite</span></button>
+            <button><img src="${F}mesa.jpg" alt="" /><span>Menu</span></button>
+          </div>
+          <p class="lock">Celular aprova. Mesa escolhe o grampeado.</p>
+        </div>`;
     }
 
     function mais() {
@@ -551,16 +518,14 @@
           <h2 class="serif" style="font-size:32px">Equipe</h2>
           <div class="card">
             <strong>Helena, assessora</strong>
-            <p class="mute">${S.assessora ? "Sentou. Vê tarefas e roteiro. Não vê PIX." : "Ainda de fora. Um link. Ela entra neste casamento, não numa vitrine."}</p>
+            <p class="mute">${S.assessora ? "Sentou. Vê tarefas e roteiro. Não vê PIX." : "Um link. Ela entra neste casamento, não numa vitrine. Zexy, sem o salão no meio."}</p>
             ${S.assessora
               ? `<button class="btn slim" style="margin-top:12px" data-go="assessora">Abrir a cadeira dela</button>`
               : `<button class="btn slim" style="margin-top:12px" id="invite">Mandar o convite</button>`}
           </div>
-          <div class="card"><strong>Domínio</strong><p class="mute">marinaethiago.com — como hoje.</p></div>
-          <div class="card"><strong>Arquivo</strong><p class="mute">Depois da festa: contratos, recados, fotos dos convidados.</p></div>
-          <button class="btn" style="margin-top:16px;background:transparent;border:1px solid #eadfd2" data-go="tarefas">Abrir as tarefas</button>
-        </div>
-      `;
+          <div class="card"><strong>Dia D</strong><p class="mute">Roteiro por hora. Casal e ela no mesmo papel.</p><button class="btn slim" style="margin-top:8px" data-go="roteiro">Abrir</button></div>
+          <div class="card"><strong>Caderno dos dois</strong><p class="mute">Recado privado. Futari Note.</p><button class="btn slim" style="margin-top:8px" data-go="caderno">Abrir</button></div>
+        </div>`;
     }
 
     function assessora() {
@@ -568,43 +533,104 @@
         <div class="pad">
           <p class="kicker wine">Helena · assessoria</p>
           <h2 class="serif" style="font-size:32px">${S.p1} & ${S.p2}</h2>
-          <p class="mute">14 ago 2027 · São Paulo. Você foi convidada. Sem a chave do dinheiro.</p>
-          <div class="card">
-            <strong>Roteiro do dia</strong>
-            <p class="mute">15h maquiagem · 17h igreja · 20h festa. O mesmo papel do casal. Appy / draaiboek holandês.</p>
-          </div>
-          <div class="card">
-            <strong>Tarefas que você criou</strong>
-            <p class="mute">Confirmar florista · prova do menu. O casal marca feito.</p>
-          </div>
-          <div class="card">
-            <strong>RSVP ao vivo</strong>
-            <p class="mute">${S.rsvpYes} sim. Zexy: a profissional vê a lista. Não o PIX.</p>
-          </div>
+          <p class="mute">14 ago 2027 · São Paulo. Convidada. Sem a chave.</p>
+          <div class="card"><strong>Roteiro do dia</strong><p class="mute">15h maquiagem · 17h igreja · 20h festa.</p></div>
+          <div class="card"><strong>RSVP ao vivo</strong><p class="mute">${S.rsvpYes} sim. Zexy: ela vê a lista. Não o PIX.</p></div>
           <p class="lock">Bloqueado: chave PIX, saque, teto em reais.</p>
-        </div>
-      `;
+          <button class="btn" style="margin-top:14px" data-go="roteiro">Abrir o Dia D</button>
+        </div>`;
+    }
+
+    function roteiro() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Dia D · Appy / draaiboek</p>
+          <h2 class="serif" style="font-size:32px">O mesmo papel.</h2>
+          <div class="two">
+            <div>
+              <div class="task"><i></i><div><strong>15h</strong><p class="mute">Maquiagem · suíte</p></div></div>
+              <div class="task"><i></i><div><strong>17h</strong><p class="mute">Igreja · Nossa Senhora</p></div></div>
+              <div class="task"><i></i><div><strong>20h</strong><p class="mute">Festa · salão</p></div></div>
+            </div>
+            <div class="only-desk">
+              <div class="card"><strong>Casal</strong><p class="mute">Vê o horário. Manda no zap da família.</p></div>
+              <div class="card"><strong>Helena</strong><p class="mute">Vê o mesmo. Manda no zap da equipe.</p></div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function caderno() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Caderno · Zexy</p>
+          <h2 class="serif" style="font-size:32px">Só vocês dois.</h2>
+          <div class="card"><p class="mute">Thiago</p><p>A música do pai entra depois da assinatura.</p></div>
+          <div class="card"><p class="mute">Marina</p><p>Não esquece o buquê da vovó na primeira fila.</p></div>
+        </div>`;
+    }
+
+    function zap() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Amanhã 9h · Bruiloft</p>
+          <h2 class="serif" style="font-size:32px">O zap que grita.</h2>
+          <div class="bubble">Marina e Thiago, faltam ${months()} meses. Esta semana: fechem o espaço. Um toque, a tarefa abre.</div>
+          <p class="lock">Sem o relógio, a ferramenta some. No BR, WhatsApp é o e-mail.</p>
+          <button class="btn" style="margin-top:16px" data-go="tarefas">Voltar às tarefas</button>
+        </div>`;
     }
 
     function convidado() {
       return `
-        <div class="cover" style="position:relative;min-height:360px;color:#fff">
+        <div class="cover" style="position:relative;min-height:320px;color:#fff">
           <img src="${F}ensaio.jpg" alt="" />
           <div class="shade" style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,.75))"></div>
-          <div style="position:relative;padding:220px 22px 24px">
+          <div style="position:relative;padding:180px 22px 24px">
             <p class="kicker gold">14 · 08 · 2027</p>
             <h2 class="serif" style="font-size:40px">${S.p1} & ${S.p2}</h2>
           </div>
         </div>
         <div class="pad">
-          <p class="mute">Você é o primo. Uma pergunta.</p>
-          <button class="btn wine" id="primo">Sim, estarei lá</button>
+          <p class="mute">Você é o primo. Uma pergunta. Depois os eventos, a comida, o hotel.</p>
+          <button class="btn wine" data-go="rsvp">Confirmar presença</button>
           <button class="btn" style="margin-top:8px;background:#eadfd2">Presentear no PIX</button>
-        </div>
-      `;
+          <button class="btn" style="margin-top:8px;background:#eadfd2" data-go="hotel">Onde dormir</button>
+        </div>`;
     }
 
-    const VIEWS = { rua, criar, hoje, site, gente, grana, tarefas, mais, assessora, convidado };
+    function rsvp() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">RSVP · Joy / Appy</p>
+          <h2 class="serif" style="font-size:32px">Em quais horas você está?</h2>
+          <div class="chk on"><b></b> Igreja · 17h</div>
+          <div class="chk on"><b></b> Festa · 20h</div>
+          <div class="chk"><b></b> Civil · sexta</div>
+          <label>Comida</label>
+          <select id="meal">
+            <option value="carne" ${S.meal==="carne"?"selected":""}>carne</option>
+            <option value="peixe" ${S.meal==="peixe"?"selected":""}>peixe</option>
+            <option value="veg" ${S.meal==="veg"?"selected":""}>veg</option>
+          </select>
+          <button class="btn wine" style="margin-top:18px" id="primo">Sim, estarei lá</button>
+          <p class="lock">Plus-one ganha nome. The Knot e Joy pedem isso. O buffet conta a cabeça.</p>
+        </div>`;
+    }
+
+    function endereco() {
+      return `
+        <div class="pad">
+          <p class="kicker wine">Link mágico · Joy</p>
+          <h2 class="serif" style="font-size:32px">A família preenche. A lista cresce.</h2>
+          <label>Nome</label><input value="Tia Lúcia" />
+          <label>Endereço</label><input value="Rua Harmonia, 412 — Vila Madalena" />
+          <button class="btn" style="margin-top:18px" id="addr">${S.addr ? "Já entrou na lista" : "Enviar endereço"}</button>
+          <p class="only-desk lock" style="margin-top:16px">Na mesa: QR para o grupo da família. No celular: cola no WhatsApp.</p>
+        </div>`;
+    }
+
+    const VIEWS = { rua, criar, hoje, site, gente, grana, tarefas, mesas, hotel, papel, mais, assessora, roteiro, caderno, zap, convidado, rsvp, endereco };
 
     function bindCriar() {
       const next = document.getElementById("next");
@@ -614,6 +640,7 @@
         S.p2 = (document.getElementById("p2")||{}).value || S.p2;
         S.date = (document.getElementById("date")||{}).value || S.date;
         S.city = (document.getElementById("city")||{}).value || S.city;
+        S.rito = (document.getElementById("rito")||{}).value || S.rito;
         S.guests = Number((document.getElementById("guests")||{}).value) || S.guests;
         S.budget = Number((document.getElementById("budget")||{}).value) || S.budget;
         if (S.step < 3) { S.step += 1; draw(); }
@@ -622,23 +649,34 @@
     }
 
     function draw() {
-      document.getElementById("map").innerHTML = mapHtml();
-      document.getElementById("view").innerHTML = (VIEWS[S.screen]||rua)();
-      document.getElementById("notes").innerHTML = `<p class="kicker">Nesta tela</p><h2>${MAP.find(x=>x.id===S.screen)?.t||""}</h2><ul>${(NOTES[S.screen]||[]).map(n=>`<li>· ${n}</li>`).join("")}</ul>`;
-      const tabs = document.getElementById("tabs");
+      const desk = S.device === "desk";
       const couple = COUPLE.has(S.screen);
-      tabs.hidden = !couple;
-      tabs.innerHTML = couple ? tabsHtml() : "";
-      document.getElementById("phone").classList.toggle("dark", S.screen==="rua"||S.screen==="convidado");
+      const dark = S.screen==="rua"||S.screen==="convidado";
+      const d = document.getElementById("device");
+      d.className = "device " + S.device + (couple ? " couple" : "") + (dark ? " dark" : "");
+      document.getElementById("bphone").className = desk ? "" : "on";
+      document.getElementById("bdesk").className = desk ? "on" : "";
+      document.getElementById("map").innerHTML = mapHtml();
+      document.getElementById("url").textContent = URLS[S.screen] || "nossocasamento.com";
+      document.getElementById("view").innerHTML = (VIEWS[S.screen]||rua)();
+      document.getElementById("notes").innerHTML = `<p class="kicker">Nesta tela · ${desk?"mesa":"celular"}</p><h2>${MAP.find(x=>x.id===S.screen)?.t||""}</h2><ul>${(NOTES[S.screen]||[]).map(n=>`<li>· ${n}</li>`).join("")}</ul>`;
+      const tabs = document.getElementById("tabs");
+      tabs.hidden = !couple || desk;
+      tabs.innerHTML = couple && !desk ? tabsHtml() : "";
+      document.getElementById("rail").innerHTML = desk && couple ? railHtml() : "";
       const t = document.getElementById("toast");
-      t.hidden = !S.toast;
-      t.textContent = S.toast;
+      t.hidden = !S.toast; t.textContent = S.toast;
       bindCriar();
       document.getElementById("primo")?.addEventListener("click", confirmPrimo);
       document.getElementById("invite")?.addEventListener("click", invite);
+      document.getElementById("seat")?.addEventListener("click", seat);
+      document.getElementById("addr")?.addEventListener("click", saveAddr);
+      document.getElementById("meal")?.addEventListener("change", (e) => { S.meal = e.target.value; });
     }
 
     document.body.addEventListener("click", (e) => {
+      const dev = e.target.closest("[data-dev]");
+      if (dev) { S.device = dev.getAttribute("data-dev"); draw(); return; }
       const goEl = e.target.closest("[data-go]");
       if (goEl) go(goEl.getAttribute("data-go"));
       const face = e.target.closest("[data-face]");
